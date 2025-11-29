@@ -1,5 +1,6 @@
 import DefaultTheme from "vitepress/theme-without-fonts";
 import CustomLayout from "./CustomLayout.vue";
+import Layout from "./Layout.vue";
 import TwoslashFloatingVue from '@shikijs/vitepress-twoslash/client'
 import '@shikijs/vitepress-twoslash/style.css'
 import './styles/vars.css'

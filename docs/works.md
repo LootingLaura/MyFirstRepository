@@ -5,7 +5,7 @@ titleTemplate: Next Generation Frontend Tooling
 # since `onMounted` doesn't run during SSR
 pageClass: landing dark
 
-layout: home
+layout: works
 aside: false
 editLink: false
 markdownStyles: false
@@ -20,7 +20,7 @@ import Hero from './.vitepress/theme/1. hero-section/HeroSection.vue'
 
 import FrameworksSection from './.vitepress/theme/3. frameworks-section/FrameworksSection.vue'
 
-import ProposalStack from './.vitepress/theme/components/ProposalStack.vue'
+import Layout from './.vitepress/theme/Layout.vue'
 
 const { isDark } = useData()
 
@@ -34,8 +34,7 @@ onBeforeUnmount(() => {
 </script>
 <div class="VPHome">
 
-  <Hero/>
-  <ProposalStack/>
-  <FrameworksSection />
 
+  <Layout/>
+  <FrameworksSection />
 </div>
