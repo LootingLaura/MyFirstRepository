@@ -61,19 +61,19 @@ const outputLines: Ref[] = [
     position: 0,
     visible: false,
     labelVisible: false,
-    label: '.html',
+    label: 'Art',
   }),
   ref({
     position: 0,
     visible: false,
     labelVisible: false,
-    label: '.css',
+    label: 'Code',
   }),
   ref({
     position: 0,
     visible: false,
     labelVisible: false,
-    label: '.js',
+    label: 'performance',
   }),
 ]
 
@@ -478,6 +478,7 @@ onMounted(() => {
           width="20"
           height="20"
           :class="{ uwu: isUwu }"
+          class="vite-chip__logo"
           
         />
     </div>

@@ -5,41 +5,15 @@ import HeroDiagram from './HeroDiagram.vue'
 <template>
   <div class="hero">
     <div class="container">
-      <!-- ViteConf 2025 Button -->
-      <a
-        href="https://www.youtube.com/playlist?list=PLqGQbXn_GDmkJaoykvHCUmXUPjhgH2bVr"
-        class="hero__pill"
-        target="_blank"
-      >
-        <img
-          src="../../images/viteconf.svg"
-          alt="Viteconf logo"
-          width="20"
-          height="20"
-        />
-        <span>ViteConf 2025 Replay</span>
-      </a>
-
       <!-- Heading -->
-      <h1>The Build Tool<br />for the Web</h1>
+      <h1>My Portfolio<br />for the Web</h1>
       <!-- Tagline -->
       <h3>
-        Vite is a blazing fast frontend build tool powering the next generation
-        of web applications.
+        A showcase of my projects, skills, and experiences for fun and
+        professional growth.
       </h3>
 
-      <!-- CTA Buttons -->
-      <div class="hero__actions">
-        <a href="/guide/" class="btn btn--primary">Get started</a>
-        <a
-          href="https://github.com/vitejs/vite"
-          target="_blank"
-          class="btn btn--outline"
-        >
-          <img src="./github.svg" alt="GitHub logo" width="20" height="20" />
-          GitHub
-        </a>
-      </div>
+
     </div>
 
     <!-- Animated Diagram -->
