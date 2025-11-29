@@ -7,7 +7,7 @@ import SvgOutputs from './svg-elements/SvgOutputs.vue'
 import SvgBlueIndicator from './svg-elements/SvgBlueIndicator.vue'
 import SvgPinkIndicator from './svg-elements/SvgPinkIndicator.vue'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import type { SvgNodeProps } from '../common/SvgNode.vue'
+import type { SvgNodeProps } from '../../home-page-components/common/SvgNode.vue'
 
 gsap.registerPlugin(MotionPathPlugin)
 
@@ -473,7 +473,7 @@ onMounted(() => {
       </div>
       <div class="vite-chip__filter" />
         <img
-          src="../../images/vite.svg"
+          src="../../../images/vite.svg"
           alt="Viteconf logo"
           width="20"
           height="20"
