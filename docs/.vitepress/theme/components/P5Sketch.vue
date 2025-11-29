@@ -11,7 +11,8 @@ export default {
   props: {
     sketch: {
       type: Function,
-      required: true,
+      required: false,
+      default: null,
     },
     height: {
       type: String,
@@ -39,12 +40,48 @@ export default {
   },
   async mounted() {
     const p5 = (await import('p5')).default; // Dynamically import p5
-    this.p5Instance = new p5(this.sketch, this.$refs.p5Container);
+    const sketchToUse = typeof this.sketch === 'function'
+      ? this.sketch
+      : this.defaultSketch(this.$refs.p5Container);
+
+    this.p5Instance = new p5(sketchToUse, this.$refs.p5Container);
   },
   beforeUnmount() {
     if (this.p5Instance) {
       this.p5Instance.remove();
     }
+  },
+  methods: {
+    // Returns a p5 sketch function bound to the provided container
+    defaultSketch(container) {
+      return function (p) {
+        let x = 0;
+        let speed = 2;
+
+        p.setup = function () {
+          const w = container.clientWidth || 400;
+          const h = container.clientHeight || 300;
+          p.createCanvas(w, h).style('pointer-events', 'none');
+          p.noStroke();
+        };
+
+        p.draw = function () {
+          p.clear();
+          p.background(0, 0);
+          p.fill(200, 100, 240, 200);
+          const radius = Math.min(p.width, p.height) * 0.08;
+          x += speed;
+          if (x - radius > p.width) x = -radius;
+          p.ellipse(x, p.height / 2, radius * 2, radius * 2);
+        };
+
+        p.windowResized = function () {
+          const w = container.clientWidth || 400;
+          const h = container.clientHeight || 300;
+          p.resizeCanvas(w, h);
+        };
+      };
+    },
   },
 };
 </script>

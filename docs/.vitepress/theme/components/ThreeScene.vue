@@ -10,7 +10,8 @@
     props: {
         setupScene: {
           type: Function,
-          required: true,
+          required: false,
+          default: null,
         },
         height: {
           type: String,
@@ -42,8 +43,12 @@
       canvas.style.zIndex = '0';
       canvas.style.pointerEvents = 'none';
   
-      // Call the setupScene function to customize the scene
-      this.setupScene(this.scene, this.camera, this.renderer);
+      // Call the setupScene function to customize the scene (if provided)
+      if (typeof this.setupScene === 'function') {
+        this.setupScene(this.scene, this.camera, this.renderer);
+      } else {
+        this.defaultSetupScene(this.scene, this.camera, this.renderer);
+      }
   
       // Start the animation loop
       this.animate();
@@ -62,8 +67,35 @@
       }
     },
     methods: {
+      // A simple default scene when no setupScene prop is provided
+      defaultSetupScene(scene, camera, renderer) {
+        // position camera
+        camera.position.z = 5;
+
+        // basic cube
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshNormalMaterial();
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // small ambient light so MeshPhongMaterial would show up if used elsewhere
+        const light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+
+        // keep a reference so animate() can update it
+        this._defaultMesh = cube;
+
+        // set renderer clear color
+        try {
+          renderer.setClearColor(0x000000, 0);
+        } catch (e) {}
+      },
       animate() {
         requestAnimationFrame(this.animate);
+        if (this._defaultMesh) {
+          this._defaultMesh.rotation.x += 0.01;
+          this._defaultMesh.rotation.y += 0.013;
+        }
         if (this.scene && this.camera && this.renderer) {
           this.renderer.render(this.scene, this.camera);
         }
