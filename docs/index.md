@@ -15,8 +15,8 @@ markdownStyles: false
 <script setup>
 import { useData } from 'vitepress'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import Hero from './.vitepress/theme/1. hero-section/HeroSection.vue'
-import FrameworksSection from './.vitepress/theme/3. frameworks-section/FrameworksSection.vue'
+import Hero from './.vitepress/theme/home-page-components/hero-section/HeroSection.vue'
+import FrameworksSection from './.vitepress/theme/home-page-components/frameworks-section/FrameworksSection.vue'
 import ThreeScene from './.vitepress/theme/components/ThreeScene.vue'
 import P5Sketch from './.vitepress/theme/components/P5Sketch.vue'
 

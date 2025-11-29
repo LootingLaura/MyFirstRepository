@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SvgNode, { type SvgNodeProps } from '../../common/SvgNode.vue'
+import SvgNode, { type SvgNodeProps } from '../../../home-page-components/common/SvgNode.vue'
 import type { Ref } from 'vue'
 
 defineProps({
