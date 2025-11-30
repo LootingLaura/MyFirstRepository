@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withBase } from 'vitepress'
+import { useRoute, withBase } from 'vitepress'
 import { ref, computed } from 'vue'
 
 type Card = {
@@ -43,7 +43,7 @@ for (const path in markdownFiles) {
   const match = path.match(/works\/([^/]+)\/index\.md$/)
   const slug = match?.[1] ?? ''
 
-  // Stay on /works and switch via ?id=slug
+  // We stay on /works and switch via ?id=slug
   const route = `/works/?id=${slug}`
 
   const folder = path.replace(/\/index\.md$/, '/')
@@ -62,9 +62,14 @@ for (const path in markdownFiles) {
   })
 }
 
+const route = useRoute()
+
 // Current slug from query string (?id=slug)
 const currentSlug = computed(() => {
-  // SSR: no window → just use the first card
+  // make this computed react to route changes (SPA navigation)
+  const _ = route.path
+
+  // SSR: no window → use first card
   if (typeof window === 'undefined') {
     return cards.value[0]?.slug
   }
