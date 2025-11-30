@@ -1,61 +1,82 @@
 <script setup lang="ts">
-import { useRoute } from 'vitepress'
+import { withBase } from 'vitepress'
 import { ref, computed } from 'vue'
 
-const hovered = ref(null)
+type Card = {
+  slug: string
+  title: string
+  name: string
+  excerpt: string
+  route: string   // `/works/?id=slug`
+  image: string | null
+  component: any
+}
 
+// 1) Markdown as Vue components
+const markdownModules = import.meta.glob('../../../works/**/index.md', {
+  eager: true
+})
 
+// 2) Raw markdown text for meta (title, name, excerpt)
 const markdownFiles = import.meta.glob('../../../works/**/index.md', {
   as: 'raw',
-  eager: true,
+  eager: true
 })
+
+// Images
 const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}', {
   eager: true,
-  import: 'default',
+  import: 'default'
 })
 
-const cards = ref([])
-
-// Use Vite/VitePress base URL so generated links work when the site
-// is hosted under a subpath (e.g. GitHub Pages). import.meta.env.BASE_URL
-// is set at build time.
-const baseUrl = (import.meta as any).env && (import.meta as any).env.BASE_URL ? (import.meta as any).env.BASE_URL : '/'
-
-const route = useRoute()
-const currentPath = computed(() => route.path.replace(/\/$/, ''))
-
-const currentCard = computed(() =>
-  cards.value.find(card => card.routePath.replace(/\/$/, '') === currentPath.value)
-)
+const cards = ref<Card[]>([])
 
 for (const path in markdownFiles) {
-  const raw = markdownFiles[path]
+  const raw = markdownFiles[path] as string
   const lines = raw.split('\n')
 
   const titleLine = lines.find(line => line.startsWith('# '))
   const nameLine = lines.find(line => line.startsWith('## '))
   const excerptLine = lines.find(line => line.trim() && !line.startsWith('#'))
 
-  const routePath = path
-    .replace(/^.*\/works\//, '/works/')
-    .replace(/\/index\.md$/, '/')
+  // e.g. docs/works/my-work/index.md -> slug = "my-work"
+  const match = path.match(/works\/([^/]+)\/index\.md$/)
+  const slug = match?.[1] ?? ''
 
-  // Build an absolute route that includes the site's base URL so
-  // direct navigation to the page works on static hosts.
-  const route = baseUrl.replace(/\/$/, '') + routePath
+  // Stay on /works and switch via ?id=slug
+  const route = `/works/?id=${slug}`
 
   const folder = path.replace(/\/index\.md$/, '/')
   const imageKey = Object.keys(imageFiles).find(k => k.startsWith(folder))
 
+  const mod = markdownModules[path] as any
+
   cards.value.push({
+    slug,
     title: titleLine?.replace(/^# /, '') || 'Untitled',
     name: nameLine?.replace(/^## /, '') || 'Anonymous',
     excerpt: excerptLine || '',
     route,
-    routePath,
-    image: imageKey ? imageFiles[imageKey] : null,
+    image: imageKey ? (imageFiles[imageKey] as string) : null,
+    component: mod?.default || null
   })
 }
+
+// Current slug from query string (?id=slug)
+const currentSlug = computed(() => {
+  // SSR: no window → just use the first card
+  if (typeof window === 'undefined') {
+    return cards.value[0]?.slug
+  }
+
+  const params = new URLSearchParams(window.location.search)
+  const id = params.get('id')
+  return id || cards.value[0]?.slug
+})
+
+const currentCard = computed(() =>
+  cards.value.find(card => card.slug === currentSlug.value)
+)
 </script>
 
 <template>
@@ -67,12 +88,12 @@ for (const path in markdownFiles) {
       <ul class="space-y-3">
         <li
           v-for="card in cards"
-          :key="card.route"
+          :key="card.slug"
           class="rounded-lg transition hover:scale-[1.02]"
-          :class="{ 'ring-2 ring-gray-700': currentPath === card.route.replace(/\/$/, '') }"
+          :class="{ 'ring-2 ring-gray-700': card.slug === currentSlug }"
         >
           <a
-            :href="card.route"
+            :href="withBase(card.route)"
             class="flex items-center gap-3 p-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
             <img
@@ -82,7 +103,9 @@ for (const path in markdownFiles) {
               class="w-12 h-12 object-cover rounded border border-gray-400"
             />
             <div>
-              <div class="text-sm font-semibold text-gray-900 leading-snug">{{ card.title }}</div>
+              <div class="text-sm font-semibold text-gray-900 leading-snug">
+                {{ card.title }}
+              </div>
               <div class="text-xs text-gray-600">{{ card.name }}</div>
             </div>
           </a>
@@ -91,19 +114,27 @@ for (const path in markdownFiles) {
     </aside>
 
     <!-- Markdown Content -->
-    <section
-        class="w-full bg-white lg:w-3/4 p-6 overflow-auto"
-        :class="[currentPath.replaceAll('/works/', '')]"
-    >
-      <div v-if="currentCard?.image" class="mb-6">
-        <img
-          :src="currentCard.image"
-          alt="cover image"
-          class="w-full max-h-96 object-cover rounded border border-gray-400"
+    <section class="w-full bg-white lg:w-3/4 p-6 overflow-auto">
+      <div v-if="currentCard">
+        <div v-if="currentCard.image" class="mb-6">
+          <img
+            :src="currentCard.image"
+            alt="cover image"
+            class="w-full max-h-96 object-cover rounded border border-gray-400"
+          />
+        </div>
+
+        <!-- Render markdown component directly -->
+        <component
+          v-if="currentCard.component"
+          :is="currentCard.component"
+          class="prose prose-base md:prose-lg max-w-none"
         />
       </div>
-      <Content class="prose prose-base md:prose-lg max-w-none" />
-    </section>
 
+      <div v-else class="text-gray-500">
+        Work not found.
+      </div>
+    </section>
   </div>
 </template>
