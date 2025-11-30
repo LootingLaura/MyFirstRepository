@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 
 const hovered = ref(null)
 
+
 const markdownFiles = import.meta.glob('../../../works/**/index.md', {
   as: 'raw',
   eager: true,
@@ -15,11 +16,16 @@ const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}
 
 const cards = ref([])
 
+// Use Vite/VitePress base URL so generated links work when the site
+// is hosted under a subpath (e.g. GitHub Pages). import.meta.env.BASE_URL
+// is set at build time.
+const baseUrl = (import.meta as any).env && (import.meta as any).env.BASE_URL ? (import.meta as any).env.BASE_URL : '/'
+
 const route = useRoute()
 const currentPath = computed(() => route.path.replace(/\/$/, ''))
 
 const currentCard = computed(() =>
-  cards.value.find(card => card.route.replace(/\/$/, '') === currentPath.value)
+  cards.value.find(card => card.routePath.replace(/\/$/, '') === currentPath.value)
 )
 
 for (const path in markdownFiles) {
@@ -30,9 +36,13 @@ for (const path in markdownFiles) {
   const nameLine = lines.find(line => line.startsWith('## '))
   const excerptLine = lines.find(line => line.trim() && !line.startsWith('#'))
 
-  const route = path
+  const routePath = path
     .replace(/^.*\/works\//, '/works/')
     .replace(/\/index\.md$/, '/')
+
+  // Build an absolute route that includes the site's base URL so
+  // direct navigation to the page works on static hosts.
+  const route = baseUrl.replace(/\/$/, '') + routePath
 
   const folder = path.replace(/\/index\.md$/, '/')
   const imageKey = Object.keys(imageFiles).find(k => k.startsWith(folder))
@@ -42,6 +52,7 @@ for (const path in markdownFiles) {
     name: nameLine?.replace(/^## /, '') || 'Anonymous',
     excerpt: excerptLine || '',
     route,
+    routePath,
     image: imageKey ? imageFiles[imageKey] : null,
   })
 }

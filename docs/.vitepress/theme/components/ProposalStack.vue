@@ -63,6 +63,9 @@ const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}
 
 const cards = ref([])
 
+// Include site base so links are absolute and work on static hosts
+const baseUrl = (import.meta && import.meta.env && import.meta.env.BASE_URL) ? import.meta.env.BASE_URL : '/'
+
 for (const path in markdownFiles) {
   const raw = markdownFiles[path]
   const lines = raw.split('\n')
@@ -71,9 +74,11 @@ for (const path in markdownFiles) {
   const nameLine = lines.find(line => line.startsWith('## '))
   const excerptLine = lines.find(line => line.trim() && !line.startsWith('#'))
 
-  const route = path
+  const routePath = path
     .replace(/^.*\/works\//, '/works/')
     .replace(/\/index\.md$/, '/')
+
+  const route = baseUrl.replace(/\/$/, '') + routePath
 
   const folder = path.replace(/\/index\.md$/, '/')
   const imageKey = Object.keys(imageFiles).find(k => k.startsWith(folder))
@@ -83,6 +88,7 @@ for (const path in markdownFiles) {
     name: nameLine?.replace(/^## /, '') || 'Anonymous',
     excerpt: excerptLine || '',
     route,
+    routePath,
     image: imageKey ? imageFiles[imageKey] : null,
   })
 }
