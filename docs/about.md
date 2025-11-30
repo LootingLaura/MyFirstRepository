@@ -1,20 +1,9 @@
-# this is a tailwind workshop 
+---
+layout: about
+---
 
-<!-- <script setup>
-import { useData } from 'vitepress'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-import AboutPage from './.vitepress/theme/components/AboutPage.vue'
+# About
 
-const { isDark } = useData()
+Page content
 
-onMounted(() => {
-  document.documentElement.classList.add('dark')
-})
-
-onBeforeUnmount(() => {
-  document.documentElement.classList.toggle('dark', isDark.value)
-})
-</script>
-<div class="VPHome">
-  <AboutPage/>
-</div> -->
+This page uses the `AboutPage` Vue component located at `docs/.vitepress/theme/components/AboutPage.vue`. The component renders the page markdown inside its `<Content />` component, so keep the markdown content below this component tag.

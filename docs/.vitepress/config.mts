@@ -8,11 +8,17 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'About', link: '/about' },
+      { text: 'about', link: '/about' },
       { text: 'works', link: '/works' }
     ],
-
-
-
-  }
+  },
+   head: [
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=IBM+Plex+Serif&display=swap',
+      },
+    ],
+  ],
 })

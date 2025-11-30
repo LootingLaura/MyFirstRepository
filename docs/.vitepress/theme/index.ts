@@ -4,14 +4,15 @@ import TwoslashFloatingVue from '@shikijs/vitepress-twoslash/client'
 import '@shikijs/vitepress-twoslash/style.css'
 import './styles/vars.css'
 import './styles/landing.css'
-
-// Import Tailwind entry for the theme. Replace or remove `custom.css` styles as you migrate.
-import "./styles/tailwind.css";
+import "./styles/style.css";
+import type { Theme } from "vitepress";
+import Layout from './Layout.vue'
 
 export default {
-  extends: DefaultTheme,
-  enhanceApp({ app }) {
-    app.use(TwoslashFloatingVue)
-    // ...
-  }
+  Layout,
+  // extends: DefaultTheme,
+  // enhanceApp({ app }) {
+  //   app.use(TwoslashFloatingVue)
+  //   // ...
+  // }
 } satisfies Theme
