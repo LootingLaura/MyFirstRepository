@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Portfolio",
   description: "A VitePress Site",
-  base: "/my-awsome-portfolio/",
+  base: (import.meta as any).env && (import.meta as any).env.PROD ? '/my-awsome-portfolio/' : '/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
