@@ -6,7 +6,7 @@
     <a
       v-for="card in cards"
       :key="card.route"
-      :href="card.route"
+      :href="withBase(card.route)"
       class="group flex flex-col sm:flex-row w-full mb-6 rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm 
              transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 
              focus:ring-gray-400"
@@ -49,36 +49,41 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import { withBase } from 'vitepress'
 
 const markdownFiles = import.meta.glob('../../../works/**/index.md', {
   as: 'raw',
-  eager: true,
+  eager: true
 })
 const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}', {
   eager: true,
-  import: 'default',
+  import: 'default'
 })
 
-const cards = ref([])
+type Card = {
+  title: string
+  name: string
+  excerpt: string
+  route: string
+  image: string | null
+}
 
-// Include site base so links are absolute and work on static hosts
-const baseUrl = (import.meta && import.meta.env && import.meta.env.BASE_URL) ? import.meta.env.BASE_URL : '/'
+const cards = ref<Card[]>([])
 
 for (const path in markdownFiles) {
-  const raw = markdownFiles[path]
+  const raw = markdownFiles[path] as string
   const lines = raw.split('\n')
 
   const titleLine = lines.find(line => line.startsWith('# '))
   const nameLine = lines.find(line => line.startsWith('## '))
   const excerptLine = lines.find(line => line.trim() && !line.startsWith('#'))
 
+  // e.g. docs/works/my-work/index.md -> /works/my-work/
   const routePath = path
     .replace(/^.*\/works\//, '/works/')
     .replace(/\/index\.md$/, '/')
-
-  const route = baseUrl.replace(/\/$/, '') + routePath
 
   const folder = path.replace(/\/index\.md$/, '/')
   const imageKey = Object.keys(imageFiles).find(k => k.startsWith(folder))
@@ -87,9 +92,8 @@ for (const path in markdownFiles) {
     title: titleLine?.replace(/^# /, '') || 'Untitled',
     name: nameLine?.replace(/^## /, '') || 'Anonymous',
     excerpt: excerptLine || '',
-    route,
-    routePath,
-    image: imageKey ? imageFiles[imageKey] : null,
+    route: routePath, // base-less, withBase() will prepend base
+    image: imageKey ? (imageFiles[imageKey] as string) : null
   })
 }
 </script>

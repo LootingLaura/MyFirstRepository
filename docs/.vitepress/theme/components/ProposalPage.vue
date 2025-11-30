@@ -86,7 +86,6 @@ const currentCard = computed(() =>
 
 <template>
   <div class="flex flex-col lg:flex-row min-h-[80vh] border border-gray-400 rounded-2xl overflow-hidden shadow-lg">
-
     <!-- Sidebar -->
     <aside class="w-full lg:w-1/4 bg-gray-100 border-r border-gray-400 p-4 space-y-4 overflow-auto">
       <h2 class="text-xl font-bold mb-2 text-gray-900">Proposals</h2>

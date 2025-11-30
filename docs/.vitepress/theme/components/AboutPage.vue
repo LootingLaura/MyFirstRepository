@@ -8,13 +8,12 @@ const currentPath = computed(() => route.path.replace(/\/$/, ''))
 // Sidebar custom navigation links
 const links = [
   { title: 'Digital Media Bremen', path: 'https://digitalmedia-bremen.de' },
-  { title: 'HfK Bremen', path: 'https://www.hfk-bremen.de/en' },
+  { title: 'HfK Bremen', path: 'https://www.hfk-bremen.de/en' }
 ]
 </script>
 
 <template>
   <div class="flex flex-col lg:flex-row min-h-[80vh] border border-black rounded-2xl overflow-hidden shadow-md">
-    
     <!-- Sidebar -->
     <aside class="w-full lg:w-1/4 bg-white border-r border-black p-4 space-y-4">
       <h2 class="text-xl font-bold mb-4">Useful links</h2>
@@ -35,11 +34,8 @@ const links = [
     </aside>
 
     <!-- Markdown Content -->
-
-<section class="bg-white w-full lg:w-3/4 p-6 overflow-auto break-words overflow-x-hidden">
-  <Content class="prose prose-base md:prose-lg max-w-none break-words" />
-</section>
-
-
+    <section class="bg-white w-full lg:w-3/4 p-6 overflow-auto break-words overflow-x-hidden">
+      <Content class="prose prose-base md:prose-lg max-w-none break-words" />
+    </section>
   </div>
 </template>
