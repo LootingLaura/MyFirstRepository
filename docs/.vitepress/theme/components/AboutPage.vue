@@ -7,8 +7,8 @@ const currentPath = computed(() => route.path.replace(/\/$/, ''))
 
 // Sidebar custom navigation links
 const links = [
-  { title: 'Digital Media Bremen', path: 'https://digitalmedia-bremen.de' },
-  { title: 'HfK Bremen', path: 'https://www.hfk-bremen.de/en' }
+  { title: 'Vitepress', path: 'https://vitepress.dev/guide/what-is-vitepress' },
+  { title: 'Tailwind CSS', path: 'https://tailwindcss.com/' }
 ]
 </script>
 

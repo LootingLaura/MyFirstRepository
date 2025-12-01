@@ -1,137 +1,142 @@
-<!-- filepath: /Users/mahmoudtamaa/projects/proposals/portfolio-custom/contact.md -->
+# my-awsome-portfolio — Project Overview
 
-# Project Overview: 
+This repository is a portfolio site built with VitePress (Vue + static site generation) and styled with Tailwind CSS. Content (Markdown pages and works) lives under `docs/` and a custom VitePress theme provides components and layouts.
 
-This project is a **this  website** built using **VitePress**, a static site generator powered by **Vue.js**. The showcases various creative works, including detailed descriptions, images, and videos for each project. The site is styled with **Tailwind CSS** and includes custom components for a dynamic and visually appealing user experience.
+Key points:
+- Content folder: `docs/` (VitePress source)
+- VitePress config: `docs/.vitepress/config.mts`
+- Theme and components: `docs/.vitepress/theme/`
 
 ---
 
 ## Features
 
-### 1. **Dynamic Content**
-   - The website includes multiple sections such as:
-     - **Home**: A landing page and A gallery of projects with detailed descriptions..
-     - **About**: A guide for creating project proposals.
-  
-   - Each project is represented as an `ArticleCard` component, dynamically rendered with props like title, excerpt, image, and date.
-   - <P5Sketch :sketch="exampleSketch" />
-
-### 2. **Custom Theme**
-   - The project uses a custom theme for VitePress, defined in the `.vitepress/theme` directory.
-   - Components include:
-     - NavBar.vue: A responsive navigation bar.
-     - HomePage.vue: A custom homepage layout.
-     - ArticleCard.vue: A reusable card component for displaying project summaries.
-
-### 3. **Styling**
-   - Tailwind CSS is used for styling, providing utility-first CSS classes for rapid UI development.
-   - The `@tailwindcss/typography` plugin enhances the typography for better readability.
-
-### 4. **Responsive Design**
-   - The site is fully responsive, ensuring a seamless experience across devices.
-
-### 5. **Static Site Generation**
-   - VitePress generates a static site, making it fast and easy to deploy.
+- Static site generated with VitePress
+- Custom theme and Vue components under `docs/.vitepress/theme`
+- Tailwind CSS (including typography plugin) for styling
+- Works gallery dynamically generated from `docs/works/*/index.md`
 
 ---
 
-## Technologies Used
+## Quick Setup
 
-### 1. **VitePress**
-   - A static site generator built on Vue.js.
-   - Documentation: [VitePress Official Guide](https://vitepress.dev/)
+Prerequisites: Node.js (LTS recommended) and npm/yarn.
 
-### 2. **Vue.js**
-   - A progressive JavaScript framework for building user interfaces.
-   - Documentation: [Vue.js Official Guide](https://vuejs.org/)
+1. Clone the repo:
 
-### 3. **Tailwind CSS**
-   - A utility-first CSS framework for styling.
-   - Documentation: [Tailwind CSS Official Guide](https://tailwindcss.com/)
-
-### 4. **PostCSS**
-   - A tool for transforming CSS with JavaScript plugins.
-   - Documentation: [PostCSS Official Guide](https://postcss.org/)
-
-### 5. **Node.js**
-   - A JavaScript runtime for building and running the project.
-   - Download: [Node.js Official Website](https://nodejs.org/)
-
-### 6. **GitLab CI/CD**
-   - Used for continuous integration and deployment.
-   - Documentation: [GitLab CI/CD Guide](https://docs.gitlab.com/ee/ci/)
-
----
-
-## Project Structure
-
+```bash
+git clone <repository-url>
+cd my-awsome-portfolio
 ```
-portfolio-custom/
-├── about.md
-├── websiteoverview.md
-├── index.md
-├── .vitepress/
-│   ├── config.mts
-│   ├── theme/
-│   │   ├── Layout.vue
-│   │   ├── style.css
-│   │   ├── components/
-│   │   │   ├── NavBar.vue
-│   │   │   ├── HomePage.vue
-│   │   │   ├── ArticleCard.vue
-│   │   └── index.ts
+
+2. Install dependencies:
+
+```bash
+npm install
 ```
 
 ---
 
-## How to Set Up the Project
+## Development
 
-### 1. **Clone the Repository**
-   ```bash
-   git clone <repository-url>
-   cd proposals
-   ```
+Run the VitePress dev server (serves the site with SPA routing):
 
-### 2. **Install Dependencies**
-   Ensure you have Node.js installed, then run:
-   ```bash
-   npm install
-   ```
+```bash
+npx vitepress dev docs
+# or if you have scripts in package.json: npm run dev
+```
 
-### 3. **Run the Development Server**
-   ```bash
-   npm run dev
-   ```
-   The site will be available at `http://localhost:5173`.
+Visit the URL printed in the terminal (usually `http://localhost:5173`).
 
-### 4. **Build the Static Site**
-   ```bash
-   npm run build
-   ```
-   The static files will be generated in the `public` directory.
+---
 
-### 5. **Preview the Build**
-   ```bash
-   npm run preview
-   ```
+## Build & Preview (production/static)
+
+VitePress generates static HTML for each page. To build and preview the generated output locally:
+
+```bash
+npx vitepress build docs
+npx vitepress serve docs/.vitepress/dist
+```
+
+Notes:
+- The built files are in `docs/.vitepress/dist`.
+- This `serve` command simulates how static hosts (like GitHub Pages) will serve files.
 
 ---
 
 ## Deployment
 
-The project uses **GitLab CI/CD** for deployment. The .gitlab-ci.yml file defines the pipeline to build and deploy the site. The static files are stored in the `public` directory, ready to be served.
+You must deploy the *built* output (the `docs/.vitepress/dist` folder), not the raw `docs/` source. If you deploy the repo root or the `docs/` folder as-is, GitHub Pages may serve markdown files directly and not the generated HTML (resulting in missing layout/components and plain MD content).
+
+Two common options:
+
+1) Publish to `gh-pages` branch using `gh-pages` package (manual):
+
+```bash
+npm install --save-dev gh-pages
+# Add script to package.json: "deploy": "gh-pages -d docs/.vitepress/dist -b gh-pages"
+npm run build && npm run deploy
+```
+
+2) Automatic GitHub Actions (recommended): create `.github/workflows/deploy.yml` with a job that builds the site and deploys `docs/.vitepress/dist` to `gh-pages` using `peaceiris/actions-gh-pages`.
+
+Example workflow snippet:
+
+```yaml
+name: Build and Deploy VitePress
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx vitepress build docs
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/.vitepress/dist
+```
+
+After the workflow completes, configure GitHub Pages (in repo Settings → Pages) to serve from the `gh-pages` branch.
 
 ---
 
-## Resources and Links
+## Base configuration and GH Pages
 
-- **VitePress**: [https://vitepress.dev/](https://vitepress.dev/)
-- **Vue.js**: [https://vuejs.org/](https://vuejs.org/)
-- **Tailwind CSS**: [https://tailwindcss.com/](https://tailwindcss.com/)
-- **PostCSS**: [https://postcss.org/](https://postcss.org/)
-- **Node.js**: [https://nodejs.org/](https://nodejs.org/)
-- **GitLab CI/CD**: [https://docs.gitlab.com/ee/ci/](https://docs.gitlab.com/ee/ci/)
+If you host the site under a repository subpath (e.g. `https://username.github.io/my-awsome-portfolio/`), set the `base` field in `docs/.vitepress/config.mts` appropriately (or make it conditional for dev vs production). This ensures asset and anchor URLs include the repo path and prevents 404s for CSS/HTML on refresh.
+
+Example in `config.mts`:
+
+```js
+base: process.env.NODE_ENV === 'production' ? '/my-awsome-portfolio/' : '/',
+```
+
+Or use `import.meta.env.BASE_URL` at build time when generating absolute links in components.
 
 ---
 
-This website project is a great example of combining modern web technologies to create a visually appealing and functional static site.
+## Troubleshooting
+
+- If pages load as raw markdown on GitHub Pages, you are likely serving the repo source rather than the built `dist` folder. Deploy the built `docs/.vitepress/dist` instead.
+- If CSS 404s occur, confirm `base` matches the site path on the host (e.g. `/my-awsome-portfolio/`).
+
+---
+
+## Resources
+
+- VitePress: https://vitepress.dev/
+- Vue: https://vuejs.org/
+- Tailwind CSS: https://tailwindcss.com/
+
+---
