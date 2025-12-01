@@ -5,7 +5,7 @@
   >
     <a
       v-for="card in cards"
-      :key="card.route"
+      :key="card.slug"
       :href="withBase(card.route)"
       class="group flex flex-col sm:flex-row w-full mb-6 rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm 
              transition-all duration-300 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 
@@ -53,22 +53,23 @@
 import { ref } from 'vue'
 import { withBase } from 'vitepress'
 
-const markdownFiles = import.meta.glob('../../../works/**/index.md', {
-  as: 'raw',
-  eager: true
-})
-const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}', {
-  eager: true,
-  import: 'default'
-})
-
 type Card = {
+  slug: string
   title: string
   name: string
   excerpt: string
-  route: string
+  route: string      // `/works/?id=slug`
   image: string | null
 }
+
+const markdownFiles = import.meta.glob('../../../works/**/index.md', {
+  as: 'raw',
+  eager: true,
+})
+const imageFiles = import.meta.glob('../../../works/**/cover.{jpg,jpeg,png,webp}', {
+  eager: true,
+  import: 'default',
+})
 
 const cards = ref<Card[]>([])
 
@@ -80,20 +81,22 @@ for (const path in markdownFiles) {
   const nameLine = lines.find(line => line.startsWith('## '))
   const excerptLine = lines.find(line => line.trim() && !line.startsWith('#'))
 
-  // e.g. docs/works/my-work/index.md -> /works/my-work/
-  const routePath = path
-    .replace(/^.*\/works\//, '/works/')
-    .replace(/\/index\.md$/, '/')
+  // docs/works/my-work/index.md -> slug = "my-work"
+  const match = path.match(/works\/([^/]+)\/index\.md$/)
+  const slug = match?.[1] ?? ''
+
+  const route = `/works/?id=${slug}`
 
   const folder = path.replace(/\/index\.md$/, '/')
   const imageKey = Object.keys(imageFiles).find(k => k.startsWith(folder))
 
   cards.value.push({
+    slug,
     title: titleLine?.replace(/^# /, '') || 'Untitled',
     name: nameLine?.replace(/^## /, '') || 'Anonymous',
     excerpt: excerptLine || '',
-    route: routePath, // base-less, withBase() will prepend base
-    image: imageKey ? (imageFiles[imageKey] as string) : null
+    route,
+    image: imageKey ? (imageFiles[imageKey] as string) : null,
   })
 }
 </script>
