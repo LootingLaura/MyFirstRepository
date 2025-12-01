@@ -2,15 +2,15 @@
 
 This project uses **VitePress + Vue** but behaves like a small SPA portfolio:
 
-* `/` → landing page with **ProposalStack** (list of works)
+* `/` → landing page with **WorkStack** (list of works)
 * `/about/` → static about page
-* `/works/?id=some-slug` → **ProposalPage** (work detail with sidebar)
+* `/works/?id=some-slug` → **WorkPage** (work detail with sidebar)
 
 Routing has 3 main layers:
 
 1. **VitePress site config** (base + top-level pages)
-2. **Link generation** (NavBar + ProposalStack)
-3. **Work selection logic** (ProposalPage sidebar + query string)
+2. **Link generation** (NavBar + WorkStack)
+3. **Work selection logic** (WorkPage sidebar + query string)
 
 ---
 
@@ -73,7 +73,7 @@ So you never hardcode the repo name into links.
 
 ## 2. How works are discovered and linked
 
-Both **ProposalStack.vue** and **ProposalPage.vue** discover works automatically from Markdown files in `works/**/index.md`.
+Both **WorkStack.vue** and **WorkPage.vue** discover works automatically from Markdown files in `works/**/index.md`.
 
 ### Detection from the filesystem
 
@@ -115,9 +115,9 @@ We always apply `withBase()` when rendering them.
 
 ---
 
-## 3. ProposalStack: list of works → detail page
+## 3. WorkStack: list of works → detail page
 
-`ProposalStack.vue` is the “grid/list” on the home page.
+`WorkStack.vue` is the “grid/list” on the home page.
 
 For each work, it creates a card:
 
@@ -132,7 +132,7 @@ For each work, it creates a card:
 ```
 
 * Clicking a card sends you to `/works/?id=<slug>` (with base in production).
-* This loads the `/works/` route where **ProposalPage** is rendered.
+* This loads the `/works/` route where **WorkPage** is rendered.
 
 ---
 
@@ -142,25 +142,25 @@ In `Layout.vue`:
 
 ```ts
 const currentPageComponent = computed(() => {
-  if (frontmatter.value.layout === 'home') return ProposalStack
-  if (route.path.startsWith('/works/')) return ProposalPage
+  if (frontmatter.value.layout === 'home') return WorkStack
+  if (route.path.startsWith('/works/')) return WorkPage
   if (route.path.startsWith('/about')) return AboutPage
   return null
 })
 ```
 
-* If a page has `layout: home` in its frontmatter, it renders **ProposalStack**.
-* If the URL path starts with `/works/`, it renders **ProposalPage**.
+* If a page has `layout: home` in its frontmatter, it renders **WorkStack**.
+* If the URL path starts with `/works/`, it renders **WorkPage**.
 * `/about/` uses **AboutPage**.
 * Anything else falls back to default `<Content />`.
 
-So `/works/?id=slug` → `route.path === '/works/'` → `ProposalPage`.
+So `/works/?id=slug` → `route.path === '/works/'` → `WorkPage`.
 
 ---
 
-## 5. ProposalPage: URL → selected work
+## 5. WorkPage: URL → selected work
 
-`ProposalPage.vue` is responsible for:
+`WorkPage.vue` is responsible for:
 
 * reading the current selected work from the URL (via `?id=slug`)
 * rendering the sidebar list of works
@@ -168,7 +168,7 @@ So `/works/?id=slug` → `route.path === '/works/'` → `ProposalPage`.
 
 ### Building the cards
 
-Same discovery as in ProposalStack, but with an extra `component`:
+Same discovery as in WorkStack, but with an extra `component`:
 
 ```ts
 const markdownModules = import.meta.glob('../../../works/**/index.md', {
@@ -232,7 +232,7 @@ So the selected work’s Markdown becomes the visible content.
 
 ---
 
-## 6. Sidebar inside ProposalPage: SPA-like navigation
+## 6. Sidebar inside WorkPage: SPA-like navigation
 
 To make the sidebar reactive **without needing a refresh**, we:
 
@@ -272,7 +272,7 @@ In the template:
 
 Result:
 
-* Click **from ProposalStack** → URL `/works/?id=foo` → `currentSlug = 'foo'`
+* Click **from WorkStack** → URL `/works/?id=foo` → `currentSlug = 'foo'`
 * Click **another work in the sidebar**:
 
   * `currentSlug` changes → UI updates instantly (no refresh)
@@ -288,9 +288,9 @@ Result:
 
   * `base` in `config.ts`
   * `withBase()` when rendering `<a href>`.
-* **ProposalStack**: generates links to `/works/?id=slug` for each work.
-* **Layout**: sees `/works/...` and mounts **ProposalPage**.
-* **ProposalPage**:
+* **WorkStack**: generates links to `/works/?id=slug` for each work.
+* **Layout**: sees `/works/...` and mounts **WorkPage**.
+* **WorkPage**:
 
   * On mount, reads `?id=slug` to pick which work to show.
   * Sidebar clicks update both the **reactive state** (`currentSlug`) and the **URL** (via `router.go`), so no page refresh is needed.

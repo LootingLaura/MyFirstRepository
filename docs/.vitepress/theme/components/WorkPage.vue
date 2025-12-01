@@ -78,7 +78,7 @@ function getSlugFromLocation(): string | undefined {
   return id || cards.value[0]?.slug
 }
 
-// initial selection when page loads (including from ProposalStack)
+// initial selection when page loads (including from WorkStack)
 onMounted(() => {
   currentSlug.value = getSlugFromLocation()
 })
