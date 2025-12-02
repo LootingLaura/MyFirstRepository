@@ -2,145 +2,237 @@
 layout: about
 ---
 
-# my-awsome-portfolio — Project Overview
-
-This repository is a portfolio site built with VitePress (Vue + static site generation) and styled with Tailwind CSS. Content (Markdown pages and works) lives under `docs/` and a custom VitePress theme provides components and layouts.
-
-Key points:
-- Content folder: `docs/` (VitePress source)
-- VitePress config: `docs/.vitepress/config.mts`
-- Theme and components: `docs/.vitepress/theme/`
+Here is the final version formatted cleanly in **Markdown**:
 
 ---
 
-## Features
 
-- Static site generated with VitePress
-- Custom theme and Vue components under `docs/.vitepress/theme`
-- Tailwind CSS (including typography plugin) for styling
-- Works gallery dynamically generated from `docs/works/*/index.md`
+# Portfolio Workshop
+
+**By:** Mahmoud Tamaa  
+**Contact:** mtamaa@hfk-bremen.de  
+
+
+## Workshop Overview
+
+In this workshop, you will learn Git and modern web development using VitePress.  
+Each participant will clone a prepared repository containing a basic portfolio structure.  
+You will modify the layout (Vue components), customize it using AI tools, add your own projects, and deploy the portfolio using GitHub Pages.
+
+
+## VitePress
+
+VitePress is a fast static site generator built on Vite and Vue.js.
+
+It takes content written in Markdown, applies a theme, and generates static HTML pages that can be deployed anywhere.
+
+Ideal use cases include documentation, portfolios, and personal websites.
+
+VitePress includes a default documentation theme, but this workshop uses a custom theme that can be extended. Creative coding libraries such as `p5.js` and `three.js` can also be used.
+
+
+## Tailwind CSS
+
+Tailwind CSS is a utility-first CSS framework that enables rapid styling directly in HTML or Vue components.
+
+It provides utility classes such as `flex`, `bg-gray-100`, and `rounded-xl` to build modern and responsive layouts efficiently.
+
+Tailwind helps ensure the portfolio is clean, consistent, and mobile-friendly.
+
+
+## Before the Workshop
+
+Please complete the following requirements:
+
+1. **Create a GitHub Account** using your university email.
+2. **Get GitHub Copilot Pro (Student Access).**
+3. **Install Visual Studio Code.**
+4. **Install Node.js (LTS version).**
+5. **Review the example portfolio provided.**
+
 
 ---
 
-## Quick Setup
+## Workshop Date
 
-Prerequisites: Node.js (LTS recommended) and npm/yarn.
+**02.12.2025 — Git and GitHub Basics + Deployment with GitHub Pages**
 
-1. Clone the repo:
 
-```bash
-git clone <repository-url>
-cd my-awsome-portfolio
+## 1. Workshop Goals
+
+During the workshop, you will:
+
+- Sign in to GitHub using VS Code  
+- Clone the prepared repository  
+- Modify the project  
+- Commit and push changes to GitHub  
+- Deploy the result using GitHub Pages  
+
+
+---
+
+## 2. What is Git?
+
+Git is a version control system that helps you:
+
+- Track changes in your project  
+- Restore older versions  
+- Collaborate without overwriting others’ work  
+
+Git functions like a time machine for your project.
+
+
+### Key Git Concepts
+
+| Term | Description |
+|------|------------|
+| Repository (repo) | A project folder tracked by Git |
+| Clone | Create a local copy of a repository |
+| Commit | A saved snapshot of changes |
+| Push | Upload commits to GitHub |
+| Pull | Download commits from GitHub |
+| Branch | A parallel development line |
+| Remote | The online version of your repository (e.g., GitHub) |
+
+
+---
+
+## 3. Git vs GitHub
+
+| Git | GitHub |
+|-----|--------|
+| Runs locally and manages version history | Hosts repositories online |
+| Tracks and manages changes | Enables collaboration and website deployment |
+
+
+---
+
+## 4. Sign In to GitHub from VS Code
+
+1. Open VS Code.  
+2. Click the profile icon and log into GitHub.  
+3. Approve authentication in your browser.  
+
+Configure Git:
+
+```sh
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+````
+
+---
+
+## 5. Clone the Repository
+
+### 5.1 Copy the Repository URL
+
+Example:
+
+```
+https://github.com/username/repository.git
 ```
 
-2. Install dependencies:
+### 5.2 Clone Using Terminal
 
-```bash
+```sh
+cd Documents
+git clone https://github.com/Mahmoudtamaa993/my-awesome-portfolio.git
+cd my-awesome-portfolio
+```
+
+### 5.3 Install Dependencies
+
+```sh
 npm install
 ```
 
----
+### 5.4 Start the Development Server
 
-## Development
-
-Run the VitePress dev server (serves the site with SPA routing):
-
-```bash
-npx vitepress dev docs
-# or if you have scripts in package.json: npm run dev
+```sh
+npm run docs:dev
 ```
 
-Visit the URL printed in the terminal (usually `http://localhost:5173`).
+View the project locally at:
 
----
-
-## Build & Preview (production/static)
-
-VitePress generates static HTML for each page. To build and preview the generated output locally:
-
-```bash
-npx vitepress build docs
-npx vitepress serve docs/.vitepress/dist
+```
+http://localhost:5173
 ```
 
-Notes:
-- The built files are in `docs/.vitepress/dist`.
-- This `serve` command simulates how static hosts (like GitHub Pages) will serve files.
-
 ---
 
-## Deployment
+## 6. Make a Change
 
-You must deploy the *built* output (the `docs/.vitepress/dist` folder), not the raw `docs/` source. If you deploy the repo root or the `docs/` folder as-is, GitHub Pages may serve markdown files directly and not the generated HTML (resulting in missing layout/components and plain MD content).
+1. Open the `works` directory.
+2. Create a folder named after your project.
+3. Add an `index.md` file (copy an example if needed).
+4. Add a `cover.png` image.
+5. Save all changes.
 
-Two common options:
+Check status:
 
-1) Publish to `gh-pages` branch using `gh-pages` package (manual):
-
-```bash
-npm install --save-dev gh-pages
-# Add script to package.json: "deploy": "gh-pages -d docs/.vitepress/dist -b gh-pages"
-npm run build && npm run deploy
+```sh
+git status
 ```
 
-2) Automatic GitHub Actions (recommended): create `.github/workflows/deploy.yml` with a job that builds the site and deploys `docs/.vitepress/dist` to `gh-pages` using `peaceiris/actions-gh-pages`.
+---
 
-Example workflow snippet:
+## 7. Commit Your Changes
 
-```yaml
-name: Build and Deploy VitePress
+### Stage Files
 
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - run: npm ci
-      - run: npx vitepress build docs
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./docs/.vitepress/dist
+```sh
+git add .
 ```
 
-After the workflow completes, configure GitHub Pages (in repo Settings → Pages) to serve from the `gh-pages` branch.
+### Commit
 
----
-
-## Base configuration and GH Pages
-
-If you host the site under a repository subpath (e.g. `https://username.github.io/my-awsome-portfolio/`), set the `base` field in `docs/.vitepress/config.mts` appropriately (or make it conditional for dev vs production). This ensures asset and anchor URLs include the repo path and prevents 404s for CSS/HTML on refresh.
-
-Example in `config.mts`:
-
-```js
-base: process.env.NODE_ENV === 'production' ? '/my-awsome-portfolio/' : '/',
+```sh
+git commit -m "Added new project"
 ```
 
-Or use `import.meta.env.BASE_URL` at build time when generating absolute links in components.
+---
+
+## 8. Push Changes to GitHub
+
+```sh
+git push
+```
+
+If needed for first push:
+
+```sh
+git push -u origin main
+```
 
 ---
 
-## Troubleshooting
+## 9. Deploy with GitHub Pages
 
-- If pages load as raw markdown on GitHub Pages, you are likely serving the repo source rather than the built `dist` folder. Deploy the built `docs/.vitepress/dist` instead.
-- If CSS 404s occur, confirm `base` matches the site path on the host (e.g. `/my-awsome-portfolio/`).
+1. Open your repository on GitHub.
+2. Go to: **Settings → Pages**
+3. Under **Build and Deployment**, set:
+
+   * Source: **Deploy from a branch**
+   * Branch: **main**
+   * Folder: **/**
+4. Save.
+
+GitHub will generate a public link, for example:
+
+```
+https://username.github.io/repository-name/
+```
 
 ---
 
-## Resources
+## Git Command Reference
 
-- VitePress: https://vitepress.dev/
-- Vue: https://vuejs.org/
-- Tailwind CSS: https://tailwindcss.com/
+```sh
+git status
+git log
+git add .
+git add filename.ext
+git commit -m "Message"
+git push
+git pull
 
----
