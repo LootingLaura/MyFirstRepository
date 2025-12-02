@@ -106,6 +106,7 @@ Git functions like a time machine for your project.
 
 
 
+
 ---
 
 ## 4. Sign In to GitHub from VS Code
