@@ -105,6 +105,7 @@ Git functions like a time machine for your project.
 | Tracks and manages changes | Enables collaboration and website deployment |
 
 
+
 ---
 
 ## 4. Sign In to GitHub from VS Code
