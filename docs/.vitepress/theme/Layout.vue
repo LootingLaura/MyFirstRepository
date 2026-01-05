@@ -27,7 +27,7 @@ const currentPageComponent = computed(() => {
 
 <template>
   <!-- <HeroSection/> -->
-  <div class="min-h-screen font-plexsans bg-stone-200 text-black">
+  <div class="min-h-screen font-plexsans bg-transparent text-black">
     <NavBar />
     
     <main class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
