@@ -2,50 +2,73 @@ Purpose
 -------
 This file gives concise, repository-specific guidance to AI coding agents so they can be productive immediately.
 
-**Big picture**
-- **Type:** VitePress-based static portfolio (docs site lives in `docs/`).
-- **Build & dev:** `npm run docs:dev`, `npm run docs:build`, `npm run docs:preview` (see `package.json`).
-- **Deploy:** GitHub Actions deploys the generated site to GitHub Pages; see `.github/workflows/deploy.yml` (artifact path: `docs/.vitepress/dist`).
+Key Points
+----------
+- **Project type:** VitePress-based static portfolio. Content and site sources live under `docs/`.
+- **Primary pattern:** Filesystem-driven content: each work is a folder under `works/<slug>/` with an `index.md` and a cover image.
 
-**Key architectural patterns**
-- **Filesystem-driven works:** project entries live under `works/<slug>/index.md`. The site loads them with `import.meta.glob('../../../works/**/index.md', { eager: true })` (see `docs/documentation/RoutingOnGithub.md`).
-- **Image convention:** cover images are named `cover.{jpg,jpeg,png,webp}` and are imported with `import: 'default'` in image globs.
-- **Base handling for GitHub Pages:** `config.ts` sets `base` to `/${repoName}/` in production; UI code always builds routes without the base (e.g. `/works/?id=slug`) and uses `withBase()` when rendering links.
-- **SPA-like work navigation:** `WorkPage.vue` reads `?id=slug` on mount, updates `currentSlug`, and uses `router.go(withBase(routePath))` together with `@click.prevent` to change the URL without a full reload.
+Developer workflows (exact commands)
+----------------------------------
+- Install dependencies: `npm install` (CI uses Node 24; see `.github/workflows/deploy.yml`).
+- Dev server: `npm run docs:dev` (runs `vitepress dev docs`) — open `http://localhost:5173`.
+- Build: `npm run docs:build` (runs `vitepress build docs`) — output: `docs/.vitepress/dist`.
+- Preview built site: `npm run docs:preview` (runs `vitepress preview docs`).
 
-**Developer workflows (exact commands)**
-- Install deps: `npm install` (CI uses `node 24` and `npm install`; see `.github/workflows/deploy.yml`).
-- Local dev server: `npm run docs:dev` → open `http://localhost:5173`.
-- Build for production: `npm run docs:build` → outputs to `docs/.vitepress/dist`.
-- Preview production build: `npm run docs:preview`.
+Architecture & Conventions
+--------------------------
+- Filesystem discovery: the site imports works using the glob
+	`import.meta.glob('../../../works/**/index.md', { eager: true })`. Keep new work folders following this layout so they are auto-discovered.
+- Cover image convention: name images `cover.jpg|jpeg|png|webp` and import them via the image globs (use `import: 'default'` when consuming the glob result).
+- GitHub Pages base handling: `config.ts` sets a `base` in production. UI code should build paths without the base (e.g. `/works/?id=slug`) and call `withBase()` when rendering links or passing paths to the router. Do NOT hardcode the repo name or base path.
+- SPA-like navigation: the `WorkPage.vue` pattern reads `?id=slug` on mount, updates `currentSlug`, and navigates using `router.go(withBase(routePath))` combined with `@click.prevent` to avoid full reloads. Preserve `@click.prevent` + `router.go()` when adjusting nav behavior.
 
-**How to add a new work (concrete steps)**
-1. Create a folder: `works/<your-slug>/`.
-2. Add `index.md` (copy an existing `works/*/index.md` as a template).
-3. Add a cover image named `cover.png` (or `jpg`, `webp`).
-4. `git add . && git commit -m "Add work: <your-slug>" && git push`.
+Where to change or add content
+-----------------------------
+- Add a work: create `works/<your-slug>/index.md` (copy a nearby example), add `cover.png` (or other supported format), then commit.
+- Discovery code: see `docs/documentation/RoutingOnGithub.md` for the exact glob and route handling examples.
 
-**Conventions and gotchas for code edits**
-- Never hardcode the repo name or GitHub Pages base; use `withBase()` for rendering `href` values.
-- When updating discovery logic, follow the existing globs in `RoutingOnGithub.md` (they rely on the relative import path `../../../works/**/index.md`).
-- When changing link generation, ensure links are written without the base (e.g. `/works/?id=slug`) and wrapped in `withBase()` in templates.
-- UI navigation relies on `@click.prevent` + `router.go()`; preserve this pattern to keep SPA behavior.
+Dependencies & build notes
+-------------------------
+- Key libraries: `p5`, `three`, `gsap` (runtime). Tailwind and PostCSS are configured (`tailwind.config.js`, `postcss.config.cjs`).
+- Scripts in `package.json` (examples):
+	- `docs:dev`: `vitepress dev docs`
+	- `docs:build`: `vitepress build docs`
+	- `docs:preview`: `vitepress preview docs`
 
-**Dependencies and runtime notes**
-- Uses creative-coding libraries: `p5`, `three`, `gsap` (declared in `package.json`).
-- Tailwind CSS + PostCSS are configured (`tailwind.config.js`, `postcss.config.cjs`) — follow existing utility-first classes.
+CI / Deployment
+---------------
+- GitHub Actions builds the site and publishes the `docs/.vitepress/dist` artifact to GitHub Pages (see `.github/workflows/deploy.yml`). Keep the `base` handling logic in `config.ts` intact — it mirrors the Pages deployment path.
 
-**Files to inspect for context or examples**
-- `package.json` — scripts and dependencies.
-- `docs/documentation/RoutingOnGithub.md` — explicit code examples for routing, discovery, and `withBase()` usage.
-- `docs/about.md` and `docs/index.md` — examples of frontmatter `layout: home` and content structure.
-- `.github/workflows/deploy.yml` — CI/CD and Pages deployment steps.
+Quick examples (copy/paste safe)
+-------------------------------
+- Add a new work folder:
 
-Questions for the maintainer (please answer to reduce guesswork)
-- Preferred local Node version for contributors (CI uses `24`)?
-- Do you prefer `npm` or another package manager (pnpm / yarn)?
-- Any private assets or secrets used during deploy that agents must not attempt to recreate?
+	works/my-new-piece/index.md
 
-If you'd like, I can also:
-- Add a short PR template or CONTRIBUTING.md with the "add a work" checklist.
-- Create a small test harness that validates `import.meta.glob` discovery for `works/**`.
+	- cover.png
+
+- Use discovery glob (example found in `docs/documentation/RoutingOnGithub.md`):
+
+	const modules = import.meta.glob('../../../works/**/index.md', { eager: true })
+
+Notes / gotchas
+---------------
+- Do not hardcode the repository name or Pages base — always use `withBase()` when rendering links that will be served from GitHub Pages.
+- Keep the `@click.prevent` + `router.go()` pattern for SPA navigation to avoid breaking the intended in-place transition.
+
+Files to inspect
+----------------
+- `package.json` — scripts and deps.
+- `docs/documentation/RoutingOnGithub.md` — canonical examples for the glob, importing works, and `withBase()` usage.
+- `docs/index.md`, `docs/about.md` — frontmatter and layout examples.
+- `.github/workflows/deploy.yml` — CI build + deploy steps.
+
+Questions for the maintainer
+---------------------------
+- Preferred local Node version for contributors (CI uses `24`).
+- Preferred package manager (npm / pnpm / yarn).
+- Any private assets or secrets used during deploy agents must not attempt to recreate?
+
+If helpful I can:
+- Add a small `CONTRIBUTING.md` or PR template describing "how to add a work".
+- Add a tiny test harness that asserts `import.meta.glob` finds every `works/**/index.md`.
