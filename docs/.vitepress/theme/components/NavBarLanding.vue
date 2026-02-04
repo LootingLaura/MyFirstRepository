@@ -28,13 +28,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header v-show="showNav" class="fixed top-0 left-0 right-0 z-50 border-b border-transparent bg-transparent">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-      <div class="text-lg font-bold tracking-tight">
-        Laura Eiermanns
-      </div>
+  <header v-show="showNav" class="fixed top-0 left-0 right-0 z-50 h-screen flex flex-col items-center justify-between bg-transparent pt-12 pb-70">
+    <div class="text-8xl tracking-tight text-center" style="font-family: 'Rubik', sans-serif; font-weight: 300; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+      Laura Eiermanns
+    </div>
 
-      <ul class="flex gap-4 text-sm font-medium">
+    <nav class="flex flex-col items-center justify-center gap-8">
+      <ul class="flex flex-col gap-4 text-sm font-medium items-center">
         <li
           v-for="item in nav"
           :key="item.link"
