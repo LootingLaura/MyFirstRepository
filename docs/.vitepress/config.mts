@@ -29,7 +29,7 @@ export default defineConfig({
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css2?family=Inter&family=Rubik:wght@300&display=swap'
+          'https://fonts.googleapis.com/css2?family=Inter&family=Jost:wght@300&display=swap'
       }
     ]
   ]

@@ -7,6 +7,12 @@ html:has(.landing) {
   background-color: #101010;
 }
 
+/* Hide native system cursor when custom cursor is active */
+.hide-system-cursor,
+.hide-system-cursor * {
+  cursor: none !important;
+}
+
 .landing {
   overflow-x: hidden;
 
