@@ -4,7 +4,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import CustomCursor from './CustomCursor.vue'
 
 const { theme } = useData()
-const nav = theme.value.nav || []
+const nav = (theme.value.nav || []).filter(item => item.link !== '/')
 
 const showNav = ref(false)
 const videoRef = ref<HTMLVideoElement | null>(null)
@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
           >
             <a
               :href="withBase(item.link)"
-              class="px-10 py-1 rounded-md border-[2px] border-white hover:bg-white hover:text-black transition"
+              class="px-10 py-1 border-[2px] border-white hover:bg-white hover:text-black transition"
             >
               {{ item.text }}
             </a>

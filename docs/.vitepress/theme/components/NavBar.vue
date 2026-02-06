@@ -6,6 +6,7 @@ const { theme } = useData()
 const nav = theme.value.nav || []
 
 const showNav = ref(true)
+const showTitle = ref(true)
 
 function handleFrameEvent(e: Event) {
   const detail = (e as CustomEvent)?.detail || {}
@@ -17,6 +18,10 @@ function handleFrameEvent(e: Event) {
 onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('stopmotion:frame', handleFrameEvent as EventListener)
+  }
+  if (typeof window !== 'undefined') {
+    const path = window.location.pathname || '/'
+    showTitle.value = path === withBase('/') || path === withBase('')
   }
 })
 
@@ -30,9 +35,7 @@ onBeforeUnmount(() => {
 <template>
   <header v-show="showNav" class="fixed top-0 left-0 right-0 z-50 border-b border-transparent bg-transparent">
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-      <div class="text-lg font-bold tracking-tight">
-        Laura Eiermanns
-      </div>
+      
 
       <ul class="flex gap-4 text-sm font-medium">
         <li
@@ -41,7 +44,7 @@ onBeforeUnmount(() => {
         >
           <a
             :href="withBase(item.link)"
-            class="px-3 py-1 rounded-full border border-black hover:bg-black hover:text-white transition"
+            class="px-3 py-1 hover:bg-black hover:text-white transition"
           >
             {{ item.text }}
           </a>

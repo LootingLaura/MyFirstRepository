@@ -17,7 +17,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       // ❌ no BASE_URL here, just plain paths
-      { text: 'Home',  link: '/' },
+      { text: 'Laura Eiermanns', link: '/' },
       { text: 'about', link: '/about/' },
       { text: 'works', link: '/works/' },
     ],

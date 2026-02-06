@@ -7,6 +7,7 @@ import WorkStack from './components/WorkStack.vue'
 import AboutPage from './components/AboutPage.vue'
 import { computed } from 'vue'
 
+
 const { frontmatter, site } = useData()
 const route = useRoute()
 
@@ -34,17 +35,10 @@ const currentNavBar = computed(() => {
 <template>
   <div class="min-h-screen bg-transparent text-black" style="font-family: 'Inter', sans-serif;">
     <component :is="currentNavBar" />
-    
-    <main class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
-      <component
-        v-if="currentPageComponent"
-        :is="currentPageComponent"
-        :key="route.path"
-      />
-      <Content
-        v-else
-        class="prose prose-base md:prose-lg lg:prose-xl max-w-none mt-8"
-      />
+
+    <main class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-12">
+      <component v-if="currentPageComponent" :is="currentPageComponent" :key="route.path" />
+      <Content v-else class="prose prose-base md:prose-lg lg:prose-xl max-w-none mt-8" />
     </main>
   </div>
 </template>
