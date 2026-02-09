@@ -6,11 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { withBase } from 'vitepress'
+import { ref, computed } from "vue";
+import { withBase } from "vitepress";
 // import StopMotion from './StopMotion.vue'
 
-const containerRef = ref<HTMLElement | null>(null)
+const containerRef = ref<HTMLElement | null>(null);
 
 // const stopFrames = computed(() => {
 //   const names = ['01.png', '02.png', '03.png', '04.png']
