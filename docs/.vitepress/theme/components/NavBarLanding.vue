@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useData, withBase } from 'vitepress'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import CustomCursor from './CustomCursor.vue'
+import { useData, withBase } from "vitepress";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import CustomCursor from "./CustomCursor.vue";
 
-const { theme } = useData()
-const nav = (theme.value.nav || []).filter(item => item.link !== '/')
+const { theme } = useData();
+const nav = (theme.value.nav || []).filter((item) => item.link !== "/");
 
-const showNav = ref(false)
-const videoRef = ref<HTMLVideoElement | null>(null)
-const videoStarted = ref(false)
+const showNav = ref(false);
+const videoRef = ref<HTMLVideoElement | null>(null);
+const videoStarted = ref(false);
 
 // Import video - update 'Intro.MP4' to your actual video filename
-const videoSrc = new URL('../../public/Intro.MP4', import.meta.url).href
+const videoSrc = new URL("../../public/Intro.MP4", import.meta.url).href;
 
 // function handleFrameEvent(e: Event) {
 //   const detail = (e as CustomEvent)?.detail || {}
@@ -21,32 +21,35 @@ const videoSrc = new URL('../../public/Intro.MP4', import.meta.url).href
 // }
 
 const handleCursorClick = () => {
-  videoStarted.value = true
-  showNav.value = true
+  videoStarted.value = true;
+  showNav.value = true;
   if (videoRef.value) {
-    videoRef.value.play().catch(err => {
-      console.warn('Video play failed:', err)
-    })
+    videoRef.value.play().catch((err) => {
+      console.warn("Video play failed:", err);
+    });
   }
-}
+};
 
 onMounted(() => {
   // if (typeof window !== 'undefined') {
   //   window.addEventListener('stopmotion:frame', handleFrameEvent as EventListener)
   // }
-})
+});
 
 onBeforeUnmount(() => {
   // if (typeof window !== 'undefined') {
   //   window.removeEventListener('stopmotion:frame', handleFrameEvent as EventListener)
   // }
-})
+});
 </script>
 
 <template>
   <div class="relative w-full h-screen">
     <!-- Custom Cursor Component -->
-    <CustomCursor :is-visible="!videoStarted" @cursor-click="handleCursorClick" />
+    <CustomCursor
+      :is-visible="!videoStarted"
+      @cursor-click="handleCursorClick"
+    />
 
     <!-- Fullscreen background video -->
     <video
@@ -64,20 +67,27 @@ onBeforeUnmount(() => {
     <div class="absolute inset-0 bg-black/20"></div>
 
     <!-- Navigation overlay -->
-    <header v-show="showNav" class="relative z-50 h-screen flex flex-col items-center justify-between pt-12 pb-70">
-      <div class="text-8xl text-white tracking-tight text-center" style="font-family: 'Jost', sans-serif; font-weight: 800; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+    <header
+      v-show="showNav"
+      class="relative z-50 h-screen flex flex-col items-center justify-between pt-12 pb-70"
+    >
+      <div
+        class="text-8xl text-white tracking-tight text-center"
+        style="
+          font-family: 'Jost', sans-serif;
+          font-weight: 800;
+          text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        "
+      >
         LAURA EIERMANNS
       </div>
 
       <nav class="flex flex-col items-center justify-center gap-8">
-        <ul class="flex flex-col gap-7 text-sm font-medium items-center">
-          <li
-            v-for="item in nav"
-            :key="item.link"
-          >
+        <ul class="flex flex-col gap-7 text-lg font-medium tracking-wider items-center">
+          <li v-for="item in nav" :key="item.link">
             <a
               :href="withBase(item.link)"
-              class="px-10 py-1 border-[2px] border-white hover:bg-white hover:text-black transition"
+              class="px-10 py-1 border-2 border-white hover:bg-white hover:text-black transition"
             >
               {{ item.text }}
             </a>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData, withBase, useRoute } from "vitepress";
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { Transition } from "vue";
 
 const { theme } = useData();
 const route = useRoute();
@@ -46,28 +47,21 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Transition
-    enter-active-class="transition duration-700 ease-out"
-    enter-from-class="opacity-0 -translate-x-3"
-    enter-to-class="opacity-100 translate-x-0"
-    leave-active-class="transition duration-400 ease-in"
-    leave-from-class="opacity-100 translate-x-0"
-    leave-to-class="opacity-0 -translate-x-6"
-  >
+  <Transition name="navbar-fade">
     <header
       v-if="showNav"
-      class="fixed top-[62px] left-0 right-0 z-50 border-b border-transparent bg-transparent"
+      class="fixed top-[45px] left-0 right-0 z-40 h-10 flex items-center bg-white/10 backdrop-blur-md"
     >
       <nav
-        class="mx-auto flex max-w-6xl items-center justify-end px-4 py-3 sm:px-6 lg:px-8"
+        class="mx-auto w-full flex items-center justify-end px-2 py-0 sm:px-4 md:px-6 lg:px-8"
       >
         <ul
-          class="flex w-full justify-end items-center gap-4 bg-white/10 px-4 py-0 text-sm font-medium backdrop-blur-md h-1.5"
+          class="flex w-full justify-end items-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-3 md:px-4 py-0 text-xs sm:text-sm md:text-base font-medium tracking-wider overflow-x-auto"
         >
-          <li v-for="item in nav" :key="item.link">
+          <li v-for="item in nav" :key="item.link" class="shrink-0">
             <a
               :href="withBase(item.link)"
-              class="px-3 py-1 transit ion hover:bg-black"
+              class="px-2 sm:px-3 py-1 whitespace-nowrap transition hover:bg-black rounded"
             >
               {{ item.text }}
             </a>
@@ -77,3 +71,15 @@ onBeforeUnmount(() => {
     </header>
   </Transition>
 </template>
+
+<style scoped>
+.navbar-fade-enter-active,
+.navbar-fade-leave-active {
+  transition: opacity 0.1s ease-in-out;
+}
+
+.navbar-fade-enter-from,
+.navbar-fade-leave-to {
+  opacity: 0;
+}
+</style>

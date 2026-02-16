@@ -17,6 +17,10 @@ _Noise Machine_ is an experimental model of a technically augmented book that co
 
 The project explores new forms and possibilities of narrative structures that unfold on multiple, intertwined levels. While most of the narration takes place on a textual level, some details, as well as crucial elements of the story, are conveyed in an auditory or graphical manner.
 
+![The noise machine](./le-noisemachine-02.jpg)
+
+<VideoPlayer src="./NoiseMachine_Video_Eiermanns.mp4" />
+
 Noise Machine 2.0 is the latest iteration of an ongoing project. Previous versions included all technical components in an external audio player, separate from the book itself. This separation no longer exists in Version 2.0.
 
 All technical components are integrated into the back of the book. The components include a PCB, the Touch Board from _Bare Conductive_ and a lithium polymer battery.

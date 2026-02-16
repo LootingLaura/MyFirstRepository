@@ -1,12 +1,14 @@
 <template>
-  <div class="flex items-center justify-center bg-transparent">
+  <div
+    class="fixed top-0 left-0 z-[60] max-w-[40vw] sm:max-w-xs flex items-center justify-center bg-transparent pointer-events-none"
+  >
     <div class="relative flex justify-center">
       <img
         v-if="frames && frames.length"
         :src="currentSrc"
         :alt="altText"
         @click="handleClick"
-        class="cursor-pointer select-none object-contain"
+        class="cursor-pointer select-none object-contain pointer-events-auto"
         :style="{ width: width, maxHeight: 'calc(100vh - 88px)' }"
       />
       <div v-else class="text-gray-500">Keine Frames verfügbar</div>

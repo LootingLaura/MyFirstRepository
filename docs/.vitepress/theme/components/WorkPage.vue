@@ -116,12 +116,11 @@ const currentCard = computed(() =>
 
 <template>
   <div class="w-full relative">
-    <!-- StopMotion Component - Fixed in upper left corner -->
+    <!-- StopMotion Component -->
     <StopMotion
       :frames="stopMotionFrames"
-      fps="8"
-      width="200px"
-      class="fixed top-0 left-4 z-[60]"
+      :fps="8"
+      width="150px"
     />
 
     <!-- Main Content -->
@@ -135,7 +134,7 @@ const currentCard = computed(() =>
           :key="card.slug"
           :href="withBase(card.route)"
           @click.prevent="selectCard(card.slug, card.route)"
-          class="group overflow-hidden transition-transform duration-400 ease-out hover:scale-[1.01]"
+          class="group overflow-hidden shadow-md transition-shadow duration-700 ease-in-out hover:shadow-2xl"
         >
           <!-- Card Image -->
           <div class="relative h-56 bg-gray-200 overflow-hidden">
@@ -143,11 +142,11 @@ const currentCard = computed(() =>
               v-if="card.image"
               :src="card.image"
               alt="cover image"
-              class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+              class="w-full h-full object-cover transition-all duration-700 ease-in-out opacity-80 group-hover:opacity-100 group-hover:scale-98"
             />
             <div
               v-else
-              class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"
+              class="w-full h-full bg-linear-to-br from-gray-300 to-gray-400"
             ></div>
           </div>
 
@@ -168,13 +167,13 @@ const currentCard = computed(() =>
       <div v-else class="space-y-6">
         <button
           @click="currentSlug = undefined"
-          class="px-4 py-2 text-sm font-medium text-white bg-gray/10 hover:bg-gray-200 transition"
+          class="px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 transition"
         >
           to Gallery
         </button>
 
         <div
-          class="border border-gray-300 rounded-2xl overflow-hidden shadow-lg"
+          class="border border-white/10 rounded-ms overflow-hidden"
         >
           <div v-if="currentCard.image" class="w-full">
             <img

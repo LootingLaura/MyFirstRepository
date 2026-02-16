@@ -2,17 +2,19 @@ import DefaultTheme from "vitepress/theme-without-fonts";
 
 import TwoslashFloatingVue from '@shikijs/vitepress-twoslash/client'
 import '@shikijs/vitepress-twoslash/style.css'
+import 'plyr/dist/plyr.css'
 import './styles/vars.css'
 import './styles/landing.css'
 import "./tailwind.css";
 import type { Theme } from "vitepress";
 import Layout from './Layout.vue'
+import AudioPlayer from './components/AudioPlayer.vue'
+import VideoPlayer from './components/VideoPlayer.vue'
 
 export default {
   Layout,
-  // extends: DefaultTheme,
-  // enhanceApp({ app }) {
-  //   app.use(TwoslashFloatingVue)
-  //   // ...
-  // }
+  enhanceApp({ app }) {
+    app.component('AudioPlayer', AudioPlayer)
+    app.component('VideoPlayer', VideoPlayer)
+  }
 } satisfies Theme

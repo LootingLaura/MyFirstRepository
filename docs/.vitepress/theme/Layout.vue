@@ -5,12 +5,41 @@ import NavBarLanding from "./components/NavBarLanding.vue";
 import WorkPage from "./components/WorkPage.vue";
 import WorkStack from "./components/WorkStack.vue";
 import AboutPage from "./components/AboutPage.vue";
-import { computed, watch } from "vue";
+import { computed, watch, onMounted, ref } from "vue";
 import { useStopMotionState } from "./composables/useStopMotionState";
 
 const { frontmatter, site } = useData();
 const route = useRoute();
 const { resetState } = useStopMotionState();
+
+const grainOverlay = ref<HTMLDivElement | null>(null);
+
+// Generate noise texture on mount
+onMounted(() => {
+  if (grainOverlay.value) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      const size = 128;
+      canvas.width = size;
+      canvas.height = size;
+      const imageData = ctx.createImageData(size, size);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const value = Math.random() * 255;
+        data[i] = value; // R
+        data[i + 1] = value; // G
+        data[i + 2] = value; // B
+        data[i + 3] = 50; // A (semi-transparent)
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      const dataUrl = canvas.toDataURL("image/png");
+      grainOverlay.value.style.backgroundImage = `url(${dataUrl})`;
+    }
+  }
+});
 
 // Remove base from the path so matching works in dev & GitHub Pages
 const normalizedPath = computed(() => {
@@ -47,12 +76,15 @@ const currentNavBar = computed(() => {
 
 <template>
   <div
-    class="min-h-screen text-white"
-    style="font-family: Inter, sans-serif; background-color: #020205"
+    class="min-h-screen text-white relative"
+    style="font-family: Jost, sans-serif; background-color: #020205"
   >
+    <!-- Grain overlay -->
+    <div ref="grainOverlay" class="grain-overlay"></div>
+
     <component :is="currentNavBar" />
 
-    <main class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-40">
+    <main class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-40 relative">
       <component
         v-if="currentPageComponent"
         :is="currentPageComponent"
@@ -65,3 +97,17 @@ const currentNavBar = computed(() => {
     </main>
   </div>
 </template>
+
+<style scoped>
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.05;
+  background-repeat: repeat;
+}
+</style>

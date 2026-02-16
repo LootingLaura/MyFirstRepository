@@ -27,12 +27,11 @@ const links = [
 
 <template>
   <div class="w-full relative">
-    <!-- StopMotion Component - Fixed in upper left corner -->
+    <!-- StopMotion Component -->
     <StopMotion
       :frames="stopMotionFrames"
-      fps="8"
-      width="200px"
-      class="fixed top-0 left-4 z-[60]"
+      :fps="8"
+      width="150px"
     />
 
     <!-- Main Content -->
