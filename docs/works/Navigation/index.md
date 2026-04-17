@@ -16,3 +16,6 @@ verschwinden und legen so die darunterliegende Karte frei.
 Die App regt dazu an, die eigene unmittelbare Umgebung zu erkunden und richtet sich
 insbesondere an Personen, die Interesse an der Erkundung neuer Städte oder der
 Wiederentdeckung vertrauter Umgebungen haben.
+
+
+<YouTubePlayer url="https://youtu.be/hNGjFCHw1Tw" />

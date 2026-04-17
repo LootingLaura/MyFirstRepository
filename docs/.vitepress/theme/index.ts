@@ -10,11 +10,13 @@ import type { Theme } from "vitepress";
 import Layout from './Layout.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import VideoPlayer from './components/VideoPlayer.vue'
+import YouTubePlayer from './components/YouTubePlayer.vue'
 
 export default {
   Layout,
   enhanceApp({ app }) {
     app.component('AudioPlayer', AudioPlayer)
     app.component('VideoPlayer', VideoPlayer)
+    app.component('YouTubePlayer', YouTubePlayer)
   }
 } satisfies Theme

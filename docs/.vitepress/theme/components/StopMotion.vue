@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 z-[60] max-w-[40vw] sm:max-w-xs flex items-center justify-center bg-transparent pointer-events-none"
+    class="fixed top-0 left-0 z-[60] max-w-[40vw] sm:max-w-xs h-25 flex items-center justify-center bg-transparent pointer-events-none"
   >
     <div class="relative flex justify-center">
       <img

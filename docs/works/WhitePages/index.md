@@ -9,6 +9,7 @@ Eine leere Seite drückt vor allem aus, dass noch alles, oder zumindest vieles, 
 
 In manchen Ländern ist die leere Seite zum Symbol des Widerstands geworden, um diese Freiheit zu erkämpfen.
 
+<YouTubePlayer url="https://www.youtube.com/watch?v=VrIf2Mvyb7w" />
 
 Künstlerische Leitung & Choreografie: Laura Delfino
 
@@ -16,7 +17,7 @@ Assistenz: Laura Eiermanns
 
 Licht/Technik: Karin Reitz
 
-Tanz: Larissa-Maria Bittner, Laura Eiermanns, Juhee Lee, Veronica Ryabina, Barbara Westenberger, Gina-Maria Zeuch
+Tanz: Moray Bittner, Laura Eiermanns, Juhee Lee, Veronica Ryabina, Barbara Westenberger, Gina-Maria Zeuch
 
 Stimmarbeit: Annette Bialonski, Andreas Lobisch, Helen Bialonski
 

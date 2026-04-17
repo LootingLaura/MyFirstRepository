@@ -19,7 +19,8 @@ The project explores new forms and possibilities of narrative structures that un
 
 ![The noise machine](./le-noisemachine-02.jpg)
 
-<VideoPlayer src="./NoiseMachine_Video_Eiermanns.mp4" />
+
+<YouTubePlayer url="https://youtu.be/taEDoowtFqs" />
 
 Noise Machine 2.0 is the latest iteration of an ongoing project. Previous versions included all technical components in an external audio player, separate from the book itself. This separation no longer exists in Version 2.0.
 

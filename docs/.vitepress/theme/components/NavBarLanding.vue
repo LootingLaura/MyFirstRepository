@@ -56,7 +56,6 @@ onBeforeUnmount(() => {
       ref="videoRef"
       class="absolute inset-0 w-full h-full object-cover"
       muted
-      loop
       playsinline
     >
       <!-- Update the src path to your video file -->
