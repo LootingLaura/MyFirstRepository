@@ -3,3 +3,9 @@ docs/.vitepress/cache
 docs/.vitepress/dist
 node_modules
 npm-debug.log
+
+# Große Mediendateien (zu groß für GitHub)
+docs/works/**/*.mp4
+docs/works/**/*.MP4
+docs/works/**/*.wav
+docs/works/**/*.WAV
