@@ -11,7 +11,7 @@ Die Dunkelziffer (engl. Dark Figure of Crime) beschreibt die geschätzte, offizi
  
 Die Installation _Tower of Dark Figure_ transformiert die abstrakten Datenbereiche der Dunkelziffer in einen audiovisuell erlebbaren Raum und verleiht dem Unnahbaren so eine greifbare Form.
 
-<AudioPlayer src="./Tower of Dark Figure_binaural.wav" />
+<AudioPlayer src="https://github.com/LootingLaura/MyFirstRepository/releases/download/audio/Tower.of.Dark.Figure_binaural.wav" />
 
 ## Beschreibung und Aufbau
 Die skulpturale Installation besteht aus vier aufeinander gestapelten Holzboxen. Die Oberflächen der Boxen sind schwarz bemalt, wobei einige Seiten mit Spiegelfolie verkleidet sind. Zwei Seiten der obersten Box bestehen aus Acrylglas mit Spionglasfolie. 
