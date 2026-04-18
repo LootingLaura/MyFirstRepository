@@ -2,16 +2,8 @@
 
 ## 2025
 
-## information
+## augmented book
 
-- Title: Noise Machine 2.0
-- Category: Semesterarbeit
-- Student: Laura Eiermanns
-- Course Title: Was passiert dann?
-- Lecturer: Prof. Peter von Maydell
-- Year: SS 2025
-
-## text + images + videos
 
 _Noise Machine_ is an experimental model of a technically augmented book that combines textual, auditory and visual elements. Likewise, _Noise Machine_ is the title of the dystopian horror short story included inside the model.
 

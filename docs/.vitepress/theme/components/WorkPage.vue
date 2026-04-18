@@ -45,6 +45,9 @@ const imageFiles = import.meta.glob(
   },
 );
 
+// Reihenfolge der Cards in der Gallery — Slugs in gewünschter Reihenfolge
+const slugOrder = ["WhitePages", "TowerOfDarkFigure", "MOI", "NoiseMachine"];
+
 const cards = ref<Card[]>([]);
 
 for (const path in markdownFiles) {
@@ -79,6 +82,16 @@ for (const path in markdownFiles) {
     component: mod?.default || null,
   });
 }
+
+// Cards nach slugOrder sortieren — nicht gelistete kommen danach
+cards.value.sort((a, b) => {
+  const ai = slugOrder.indexOf(a.slug);
+  const bi = slugOrder.indexOf(b.slug);
+  if (ai === -1 && bi === -1) return 0;
+  if (ai === -1) return 1;
+  if (bi === -1) return -1;
+  return ai - bi;
+});
 
 const router = useRouter();
 
@@ -180,15 +193,16 @@ const currentCard = computed(() =>
               :src="currentCard.image"
               alt="cover image"
               class="w-full max-h-96 object-cover"
+              :style="currentCard.slug === 'MOI' ? { objectPosition: 'center 35%' } : {}"
             />
           </div>
 
-          <div class="p-6 bg-white">
+          <div class="p-6 text-[#ffffff]">
             <!-- Render markdown component directly -->
             <component
               v-if="currentCard.component"
               :is="currentCard.component"
-              class="prose prose-base md:prose-lg max-w-none"
+              class="prose prose-invert prose-base md:prose-lg max-w-none"
             />
           </div>
         </div>

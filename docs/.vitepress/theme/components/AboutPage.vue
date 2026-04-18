@@ -17,12 +17,6 @@ const stopMotionFrames = computed(() => {
     }
   });
 });
-
-// Sidebar custom navigation links
-const links = [
-  { title: "Vitepress", path: "https://vitepress.dev/guide/what-is-vitepress" },
-  { title: "Tailwind CSS", path: "https://tailwindcss.com/" },
-];
 </script>
 
 <template>

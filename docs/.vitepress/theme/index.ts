@@ -11,6 +11,7 @@ import Layout from './Layout.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import VideoPlayer from './components/VideoPlayer.vue'
 import YouTubePlayer from './components/YouTubePlayer.vue'
+import ImageCarousel from './components/ImageCarousel.vue'
 
 export default {
   Layout,
@@ -18,5 +19,6 @@ export default {
     app.component('AudioPlayer', AudioPlayer)
     app.component('VideoPlayer', VideoPlayer)
     app.component('YouTubePlayer', YouTubePlayer)
+    app.component('ImageCarousel', ImageCarousel)
   }
 } satisfies Theme

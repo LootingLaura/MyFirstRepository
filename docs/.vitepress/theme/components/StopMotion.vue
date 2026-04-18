@@ -8,7 +8,10 @@
         :src="currentSrc"
         :alt="altText"
         @click="handleClick"
-        class="cursor-pointer select-none object-contain pointer-events-auto"
+        :class="[
+          'cursor-pointer select-none object-contain pointer-events-auto transition-[filter] duration-500 ease-out',
+          (isFirstFrame || isLastFrame) && !isPlaying ? 'hover:brightness-120' : '',
+        ]"
         :style="{ width: width, maxHeight: 'calc(100vh - 88px)' }"
       />
       <div v-else class="text-gray-500">Keine Frames verfügbar</div>
@@ -78,6 +81,8 @@ async function preloadAll(): Promise<void> {
 }
 
 const currentSrc = computed(() => frames.value[index.value] || "");
+const isFirstFrame = computed(() => index.value === 0);
+const isLastFrame = computed(() => index.value === frames.value.length - 1);
 
 function clearTimer() {
   if (timer !== null) {
