@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { useData, useRoute } from "vitepress";
+import { useData, useRoute, withBase } from "vitepress";
 import NavBar from "./components/NavBar.vue";
 import NavBarLanding from "./components/NavBarLanding.vue";
 import WorkPage from "./components/WorkPage.vue";
 import WorkStack from "./components/WorkStack.vue";
 import AboutPage from "./components/AboutPage.vue";
+import Footer from "./components/Footer.vue";
+import StopMotion from "./components/StopMotion.vue";
 import { computed, watch, onMounted, ref } from "vue";
 import { useStopMotionState } from "./composables/useStopMotionState";
 
@@ -72,6 +74,19 @@ const currentNavBar = computed(() => {
   if (frontmatter.value.layout === "home") return NavBarLanding;
   return NavBar;
 });
+
+const showFooter = computed(() => frontmatter.value.layout !== "home");
+
+const stopMotionFrames = computed(() => {
+  const names = ["01.png", "02.png", "03.png", "04.png"];
+  return names.map((n) => {
+    try {
+      return new URL(`../public/stopmotion/${n}`, import.meta.url).href;
+    } catch (e) {
+      return withBase(`/stopmotion/${n}`);
+    }
+  });
+});
 </script>
 
 <template>
@@ -90,11 +105,15 @@ const currentNavBar = computed(() => {
         :is="currentPageComponent"
         :key="route.path"
       />
-      <Content
-        v-else
-        class="prose prose-base md:prose-lg lg:prose-xl max-w-none mt-8"
-      />
+      <template v-else>
+        <StopMotion :frames="stopMotionFrames" :fps="8" width="150px" />
+        <Content
+          class="prose prose-invert prose-base md:prose-lg lg:prose-xl max-w-none mt-8"
+        />
+      </template>
     </main>
+
+    <Footer v-if="showFooter" />
   </div>
 </template>
 

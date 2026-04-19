@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useRoute, withBase } from "vitepress";
+import { withBase } from "vitepress";
 import { computed } from "vue";
 import StopMotion from "./StopMotion.vue";
-
-const route = useRoute();
-const currentPath = computed(() => route.path.replace(/\/$/, ""));
 
 // Load stopmotion frames
 const stopMotionFrames = computed(() => {
@@ -28,37 +25,13 @@ const stopMotionFrames = computed(() => {
       width="150px"
     />
 
-    <!-- Main Content -->
-    <div
-      class="flex flex-col lg:flex-row min-h-[80vh] border border-black overflow-hidden shadow-md"
+    <!-- Markdown Content -->
+    <section
+      class="w-full p-6 overflow-auto overflow-x-hidden wrap-break-word"
     >
-      <!-- Sidebar -->
-      <aside class="w-full lg:w-1/4 border-r border-black p-4 space-y-4">
-        <h2 class="text-xl font-bold mb-4 text-white">Useful links</h2>
-        <ul class="space-y-2">
-          <li v-for="link in links" :key="link.path">
-            <a
-              :href="link.path"
-              class="block px-3 py-2 border border-black rounded text-sm font-medium text-white hover:bg-black hover:text-white transition"
-              :class="{
-                'bg-black text-white':
-                  currentPath === link.path.replace(/\/$/, ''),
-              }"
-            >
-              {{ link.title }}
-            </a>
-          </li>
-        </ul>
-      </aside>
-
-      <!-- Markdown Content -->
-      <section
-        class="w-full lg:w-3/4 p-6 overflow-auto break-words overflow-x-hidden text-white"
-      >
-        <Content
-          class="prose prose-base md:prose-lg max-w-none break-words text-white"
-        />
-      </section>
-    </div>
+      <Content
+        class="prose prose-invert prose-base md:prose-lg max-w-3xl mx-auto wrap-break-word"
+      />
+    </section>
   </div>
 </template>

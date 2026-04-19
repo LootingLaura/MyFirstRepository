@@ -1,0 +1,92 @@
+<template>
+  <div class="absolute inset-0 w-full h-full overflow-hidden bg-black">
+    <img
+      v-if="frames.length"
+      :src="currentSrc"
+      :alt="altText"
+      class="absolute inset-0 w-full h-full object-contain md:object-cover select-none"
+      draggable="false"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, ref, onMounted, onBeforeUnmount } from "vue";
+
+const props = withDefaults(
+  defineProps<{
+    frames?: string[];
+    fps?: number;
+  }>(),
+  {
+    fps: 4,
+  },
+);
+
+const emit = defineEmits<{
+  (e: "finished"): void;
+}>();
+
+const frames = computed(() => props.frames || []);
+const index = ref(0);
+const isPlaying = ref(false);
+const altText = "intro stop motion frame";
+
+let timer: number | null = null;
+const preloaded: HTMLImageElement[] = [];
+
+const currentSrc = computed(() => frames.value[index.value] || "");
+
+function clearTimer() {
+  if (timer !== null) {
+    clearInterval(timer);
+    timer = null;
+  }
+}
+
+async function preloadAll(): Promise<void> {
+  const promises = frames.value.map((u, i) => {
+    return new Promise<void>((resolve) => {
+      const img = new Image();
+      img.src = u;
+      img.onload = () => {
+        preloaded[i] = img;
+        resolve();
+      };
+      img.onerror = () => resolve();
+    });
+  });
+  await Promise.all(promises);
+}
+
+async function play() {
+  if (isPlaying.value || frames.value.length === 0) return;
+  isPlaying.value = true;
+  await preloadAll();
+
+  const len = frames.value.length;
+  const frameTime = Math.max(80, Math.round(1000 / props.fps));
+  index.value = 0;
+
+  clearTimer();
+  timer = window.setInterval(() => {
+    if (index.value >= len - 1) {
+      clearTimer();
+      isPlaying.value = false;
+      emit("finished");
+    } else {
+      index.value += 1;
+    }
+  }, frameTime);
+}
+
+onMounted(() => {
+  preloadAll();
+});
+
+onBeforeUnmount(() => {
+  clearTimer();
+});
+
+defineExpose({ play });
+</script>

@@ -1,66 +1,51 @@
 <script setup lang="ts">
 import { useData, withBase } from "vitepress";
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref } from "vue";
 import CustomCursor from "./CustomCursor.vue";
+import IntroStopMotion from "./IntroStopMotion.vue";
 
 const { theme } = useData();
 const nav = (theme.value.nav || []).filter((item) => item.link !== "/");
 
 const showNav = ref(false);
-const videoRef = ref<HTMLVideoElement | null>(null);
-const videoStarted = ref(false);
+const introRef = ref<InstanceType<typeof IntroStopMotion> | null>(null);
+const introStarted = ref(false);
 
-// Import video - update 'Intro.MP4' to your actual video filename
-const videoSrc = new URL("../../public/Intro.MP4", import.meta.url).href;
-
-// function handleFrameEvent(e: Event) {
-//   const detail = (e as CustomEvent)?.detail || {}
-//   const src: string = detail.src || ''
-//   // show only when the stopmotion frame filename ends with 04.png
-//   showNav.value = !!src && src.endsWith('04.png')
-// }
+const introFrames = [
+  "Intro_01.jpg",
+  "Intro_02.jpg",
+  "Intro_03.jpg",
+  "Intro_04.jpg",
+  "Intro_05.jpg",
+  "Intro_06.jpg",
+].map((n) => new URL(`../../public/stopmotion/Intro/${n}`, import.meta.url).href);
 
 const handleCursorClick = () => {
-  videoStarted.value = true;
-  showNav.value = true;
-  if (videoRef.value) {
-    videoRef.value.play().catch((err) => {
-      console.warn("Video play failed:", err);
-    });
-  }
+  if (introStarted.value) return;
+  introStarted.value = true;
+  introRef.value?.play();
 };
 
-onMounted(() => {
-  // if (typeof window !== 'undefined') {
-  //   window.addEventListener('stopmotion:frame', handleFrameEvent as EventListener)
-  // }
-});
-
-onBeforeUnmount(() => {
-  // if (typeof window !== 'undefined') {
-  //   window.removeEventListener('stopmotion:frame', handleFrameEvent as EventListener)
-  // }
-});
+const handleIntroFinished = () => {
+  showNav.value = true;
+};
 </script>
 
 <template>
   <div class="relative w-full h-screen">
     <!-- Custom Cursor Component -->
     <CustomCursor
-      :is-visible="!videoStarted"
+      :is-visible="!introStarted"
       @cursor-click="handleCursorClick"
     />
 
-    <!-- Fullscreen background video -->
-    <video
-      ref="videoRef"
-      class="absolute inset-0 w-full h-full object-cover"
-      muted
-      playsinline
-    >
-      <!-- Update the src path to your video file -->
-      <source :src="videoSrc" type="video/mp4" />
-    </video>
+    <!-- Fullscreen background stop-motion intro -->
+    <IntroStopMotion
+      ref="introRef"
+      :frames="introFrames"
+      :fps="5"
+      @finished="handleIntroFinished"
+    />
 
     <!-- Optional: dark overlay for better text readability -->
     <div class="absolute inset-0 bg-black/20"></div>
@@ -68,10 +53,10 @@ onBeforeUnmount(() => {
     <!-- Navigation overlay -->
     <header
       v-show="showNav"
-      class="relative z-50 h-screen flex flex-col items-center justify-between pt-12 pb-70"
+      class="relative z-50 h-screen flex flex-col items-center justify-between pt-8 pb-[45vh] sm:pt-10 sm:pb-48 md:pt-12 md:pb-80 px-4"
     >
       <div
-        class="text-8xl text-white tracking-tight text-center"
+        class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight text-center leading-tight wrap-break-word"
         style="
           font-family: 'Jost', sans-serif;
           font-weight: 800;
@@ -81,12 +66,12 @@ onBeforeUnmount(() => {
         LAURA EIERMANNS
       </div>
 
-      <nav class="flex flex-col items-center justify-center gap-8">
-        <ul class="flex flex-col gap-7 text-lg font-medium tracking-wider items-center">
+      <nav class="flex flex-col items-center justify-center gap-4 sm:gap-8 md:gap-10">
+        <ul class="flex flex-col gap-4 sm:gap-7 md:gap-12 text-base sm:text-lg md:text-2xl font-medium tracking-wider items-center">
           <li v-for="item in nav" :key="item.link">
             <a
               :href="withBase(item.link)"
-              class="px-10 py-1 border-2 border-white hover:bg-white hover:text-black transition"
+              class="px-10 py-1 md:px-45 md:py-3 border-2 md:border-3 border-white hover:bg-white hover:text-black transition"
             >
               {{ item.text }}
             </a>
