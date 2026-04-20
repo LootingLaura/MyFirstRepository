@@ -5,6 +5,7 @@
       :src="currentSrc"
       :alt="altText"
       class="absolute inset-0 w-full h-full object-contain md:object-cover select-none"
+      :class="{ 'pulse-vibrant': showPulse }"
       draggable="false"
     />
   </div>
@@ -36,6 +37,7 @@ let timer: number | null = null;
 const preloaded: HTMLImageElement[] = [];
 
 const currentSrc = computed(() => frames.value[index.value] || "");
+const showPulse = computed(() => !isPlaying.value && index.value === 0);
 
 function clearTimer() {
   if (timer !== null) {
@@ -90,3 +92,20 @@ onBeforeUnmount(() => {
 
 defineExpose({ play });
 </script>
+
+<style scoped>
+.pulse-vibrant {
+  animation: vibrant-pulse 2.5s ease-in-out infinite;
+  will-change: filter;
+}
+
+@keyframes vibrant-pulse {
+  0%,
+  100% {
+    filter: brightness(0.5) saturate(1.05);
+  }
+  50% {
+    filter: brightness(1.1) saturate(1.25);
+  }
+}
+</style>

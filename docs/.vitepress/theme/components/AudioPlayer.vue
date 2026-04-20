@@ -37,4 +37,24 @@ onMounted(() => {
 .audio-player-wrapper {
   margin: 2.5rem 0;
 }
+
+.audio-player-wrapper :deep(.plyr--audio .plyr__controls) {
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 2px;
+}
+
+.audio-player-wrapper :deep(.plyr--audio .plyr__control) {
+  color: #e5e5e5;
+}
+
+.audio-player-wrapper :deep(.plyr--audio .plyr__control:hover),
+.audio-player-wrapper :deep(.plyr--audio .plyr__control[aria-expanded='true']) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.audio-player-wrapper :deep(.plyr--audio .plyr__time) {
+  color: #e5e5e5;
+}
 </style>

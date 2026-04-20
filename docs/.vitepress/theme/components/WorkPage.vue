@@ -46,7 +46,7 @@ const imageFiles = import.meta.glob(
 );
 
 // Reihenfolge der Cards in der Gallery — Slugs in gewünschter Reihenfolge
-const slugOrder = ["WhitePages", "TowerOfDarkFigure", "MOI", "NoiseMachine"];
+const slugOrder = ["TheSubject", "TowerOfDarkFigure", "MOI", "NoiseMachine", "Navigation", "WhitePages"];
 
 const cards = ref<Card[]>([]);
 

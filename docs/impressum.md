@@ -1,12 +1,14 @@
-contact
+**contact**
 
 Laura Eiermanns <br>
 l.eiermanns<span>@</span>gmx.de
 
+<br>
 
 Liability for Content
 
 We are responsible for our own content under applicable laws. We are not obliged to monitor third-party information transmitted or stored on this website. Obligations to remove or block the use of information under general laws remain unaffected. We will remove content upon becoming aware of a specific legal violation.
+
 
 Liability for Links
 
