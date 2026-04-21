@@ -2,17 +2,12 @@
 
 import { defineConfig } from 'vitepress'
 
-const isProd = process.env.NODE_ENV === 'production'
-
-// ⚠️ make sure this matches your repo name exactly
-const repoName = 'MyFirstRepository'
-
 export default defineConfig({
   title: 'Portfolio',
   description: 'A VitePress Site',
 
-  // GitHub Pages project site: https://<user>.github.io/<repo>/
-  base: isProd ? `/${repoName}/` : '/',
+  // Custom domain (lauraeiermanns.com) serves from root
+  base: '/',
 
   themeConfig: {
     nav: [
