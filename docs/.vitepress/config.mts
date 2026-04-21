@@ -9,6 +9,11 @@ export default defineConfig({
   // Custom domain (lauraeiermanns.com) serves from root
   base: '/',
 
+  vite: {
+    // Public assets live in docs/.vitepress/public/ (not docs/public/)
+    publicDir: '.vitepress/public',
+  },
+
   themeConfig: {
     nav: [
       // ❌ no BASE_URL here, just plain paths
