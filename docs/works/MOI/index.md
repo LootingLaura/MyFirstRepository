@@ -5,6 +5,8 @@
 
 **MOI** ist eine Video Performance, bestehend aus mehreren Elementen, welche miteinander agieren. Ziel des Projekts ist auf abstrakte Weise das Zusammenspiel und Zusammenfließen, die Intra-Aktion von Mensch und Natur darzustellen; im Sinne der Theorien von Karen Barad.
 
+<ImageCarousel folder="MOI" />
+
 Element 1: Videoaufnahme einer sich
 verändernden Steinformation
 Die Steine ruhen auf einem Fels und

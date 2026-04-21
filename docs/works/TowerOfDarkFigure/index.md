@@ -14,6 +14,10 @@ Die Installation _Tower of Dark Figure_ transformiert die abstrakten Datenbereic
 
 <AudioPlayer src="https://github.com/LootingLaura/MyFirstRepository/releases/download/audio/Tower.of.Dark.Figure_binaural.wav" />
 
+<br>
+
+![TODF_01](./images/TODF_01.jpg)
+
 
 Die Installation überträgt den Zustand der nur diffus existierenden
 Dunkelfelddaten in einen audiovisuell greifbaren Raum. Ich
@@ -28,6 +32,12 @@ den hell erleuchteten Bereich des Raumes – wir aber stehen im Dunkeln.
 Mit meiner Installation möchte ich auf abstrakte Weise ein Spotlight auf diese
 Menschen in den Dunkelfeldern werfen.
 
+![TODF_02](./images/TODF_02.jpg)
+
+![TODF_03](./images/TODF_03.jpg)
+
 ## Aufbau
 Die skulpturale Installation besteht aus vier aufeinander gestapelten Holzboxen. Die Oberflächen der Boxen sind schwarz bemalt, wobei einige Seiten mit Spiegelfolie verkleidet sind. Zwei Seiten der obersten Box bestehen aus Acrylglas mit Spionglasfolie. 
 Solange kein Licht in diese Box hineinscheint, ist das Glas von außen spiegelnd und undurchsichtig. Sobald eine Klingel betätigt wird und auf diese Weise ein LED-Streifen aufleuchtet, kann das Innere der Box betrachtet werden. Mit Betätigung der Klingel wird außerdem ein 3D-Soundscape gestartet, welcher über Kopfhörer angehört werden kann. Mit dem Erreichen des Endes der Audiodatei erfolgt die Deaktivierung der LEDs und das Innere der Box liegt hinter den Spiegeln im Verborgenen.
+
+![TODF_05](./images/TODF_05.jpg)

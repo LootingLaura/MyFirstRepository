@@ -2,7 +2,7 @@
 
 ## 2025
 
-## information
+## navigation app
 
 
 VoidMap ist eine Demo-Version einer Navigations-App.

@@ -105,12 +105,12 @@ function goTo(i: number) {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -122,8 +122,8 @@ function goTo(i: number) {
 }
 
 .carousel-arrow svg {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .carousel-arrow-left {

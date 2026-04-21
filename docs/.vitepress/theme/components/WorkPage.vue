@@ -193,7 +193,7 @@ const currentCard = computed(() =>
               :src="currentCard.image"
               alt="cover image"
               class="w-full max-h-96 object-cover"
-              :style="currentCard.slug === 'MOI' ? { objectPosition: 'center 35%' } : {}"
+              :style="currentCard.slug === 'MOI' ? { objectPosition: 'center 35%' } : currentCard.slug === 'TowerOfDarkFigure' ? { objectPosition: 'center 20%' } : {}"
             />
           </div>
 
