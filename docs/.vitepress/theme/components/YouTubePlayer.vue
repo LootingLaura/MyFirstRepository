@@ -17,7 +17,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import Plyr from 'plyr'
 
 const props = defineProps({
   url: {
@@ -40,8 +39,9 @@ const videoId = computed(() => {
   return match ? match[1] : url
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (iframeElement.value) {
+    const Plyr = (await import('plyr')).default
     new Plyr(iframeElement.value, {
       controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
       ratio: '16:9'

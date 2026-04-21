@@ -14,7 +14,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import Plyr from 'plyr'
 
 const props = defineProps({
   src: {
@@ -25,8 +24,9 @@ const props = defineProps({
 
 const videoElement = ref(null)
 
-onMounted(() => {
+onMounted(async () => {
   if (videoElement.value) {
+    const Plyr = (await import('plyr')).default
     new Plyr(videoElement.value, {
       controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
       ratio: '16:9'

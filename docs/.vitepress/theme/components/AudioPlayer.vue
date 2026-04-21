@@ -13,7 +13,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import Plyr from 'plyr'
 
 const props = defineProps({
   src: {
@@ -24,8 +23,9 @@ const props = defineProps({
 
 const audioElement = ref(null)
 
-onMounted(() => {
+onMounted(async () => {
   if (audioElement.value) {
+    const Plyr = (await import('plyr')).default
     new Plyr(audioElement.value, {
       controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings']
     })
