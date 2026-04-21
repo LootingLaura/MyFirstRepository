@@ -150,6 +150,7 @@ const currentCard = computed(() =>
               :src="card.image"
               alt="cover image"
               class="w-full h-full object-cover transition-all duration-700 ease-in-out opacity-80 group-hover:opacity-100 group-hover:scale-98"
+              :style="card.slug === 'TowerOfDarkFigure' ? { objectPosition: '10% center' } : {}"
             />
             <div
               v-else
