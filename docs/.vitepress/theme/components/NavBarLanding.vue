@@ -18,7 +18,7 @@ const introFrames = [
   "Intro_04.jpg",
   "Intro_05.jpg",
   "Intro_06.jpg",
-].map((n) => new URL(`../../public/stopmotion/Intro/${n}`, import.meta.url).href);
+].map((n) => withBase(`/stopmotion/Intro/${n}`));
 
 const handleCursorClick = () => {
   if (introStarted.value) return;

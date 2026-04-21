@@ -16,13 +16,7 @@ type Card = {
 // Load stopmotion frames
 const stopMotionFrames = computed(() => {
   const names = ["01.png", "02.png", "03.png", "04.png"];
-  return names.map((n) => {
-    try {
-      return new URL(`../../public/stopmotion/${n}`, import.meta.url).href;
-    } catch (e) {
-      return withBase(`/stopmotion/${n}`);
-    }
-  });
+  return names.map((n) => withBase(`/stopmotion/${n}`));
 });
 
 // 1) Markdown as Vue components
