@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { withBase, useRouter } from "vitepress";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import StopMotion from "./StopMotion.vue";
 
 type Card = {
@@ -104,8 +104,30 @@ function getSlugFromLocation(): string | undefined {
 }
 
 // initial selection when page loads (including from WorkStack)
+function handlePopState() {
+  currentSlug.value = getSlugFromLocation();
+}
+
+const prevAfterRouteChanged = router.onAfterRouteChange;
+
 onMounted(() => {
   currentSlug.value = getSlugFromLocation();
+  if (typeof window !== "undefined") {
+    window.addEventListener("popstate", handlePopState);
+  }
+  router.onAfterRouteChange = (to) => {
+    if (typeof prevAfterRouteChanged === "function") {
+      prevAfterRouteChanged.call(router, to);
+    }
+    currentSlug.value = getSlugFromLocation();
+  };
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== "undefined") {
+    window.removeEventListener("popstate", handlePopState);
+  }
+  router.onAfterRouteChange = prevAfterRouteChanged;
 });
 
 // when user clicks in the sidebar
@@ -116,9 +138,30 @@ function selectCard(slug: string, routePath: string) {
   router.go(withBase(routePath));
 }
 
+function backToGallery() {
+  currentSlug.value = undefined;
+  router.go(withBase("/works/"));
+}
+
 const currentCard = computed(() =>
   cards.value.find((card) => card.slug === currentSlug.value),
 );
+
+const currentIndex = computed(() =>
+  cards.value.findIndex((card) => card.slug === currentSlug.value),
+);
+
+const prevCard = computed(() => {
+  const n = cards.value.length;
+  if (currentIndex.value < 0 || n === 0) return undefined;
+  return cards.value[(currentIndex.value - 1 + n) % n];
+});
+
+const nextCard = computed(() => {
+  const n = cards.value.length;
+  if (currentIndex.value < 0 || n === 0) return undefined;
+  return cards.value[(currentIndex.value + 1) % n];
+});
 </script>
 
 <template>
@@ -173,12 +216,33 @@ const currentCard = computed(() =>
 
       <!-- Detail View -->
       <div v-else class="space-y-6">
-        <button
-          @click="currentSlug = undefined"
-          class="px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 transition"
-        >
-          to Gallery
-        </button>
+        <div class="flex items-center justify-between gap-2">
+          <button
+            @click="backToGallery"
+            class="px-4 py-2 text-lg font-medium text-white bg-white/20 hover:bg-white/30 transition"
+          >
+            back to Gallery
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button
+              v-if="prevCard"
+              @click="selectCard(prevCard.slug, prevCard.route)"
+              :aria-label="`Previous work: ${prevCard.title}`"
+              class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 text-3xl md:text-4xl leading-none pb-1 md:pb-1.5 text-white bg-white/20 hover:bg-white/30 transition"
+            >
+              ‹
+            </button>
+            <button
+              v-if="nextCard"
+              @click="selectCard(nextCard.slug, nextCard.route)"
+              :aria-label="`Next work: ${nextCard.title}`"
+              class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 text-3xl md:text-4xl leading-none pb-1 md:pb-1.5 text-white bg-white/20 hover:bg-white/30 transition"
+            >
+              ›
+            </button>
+          </div>
+        </div>
 
         <div
           class="border border-white/10 rounded-ms overflow-hidden"

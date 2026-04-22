@@ -53,10 +53,10 @@ const handleIntroFinished = () => {
     <!-- Navigation overlay -->
     <header
       v-show="showNav"
-      class="relative z-50 h-screen flex flex-col items-center justify-between pt-8 pb-[45vh] sm:pt-10 sm:pb-48 md:pt-12 md:pb-80 px-4"
+      class="relative z-50 h-screen flex flex-col items-center justify-between pt-25 pb-[45vh] sm:pt-18 sm:pb-[45vh] md:pt-12 md:pb-[45vh] px-4"
     >
       <div
-        class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight text-center leading-tight wrap-break-word"
+        class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight text-center leading-tight wrap-break-word"
         style="
           font-family: 'Jost', sans-serif;
           font-weight: 800;
@@ -66,12 +66,12 @@ const handleIntroFinished = () => {
         LAURA EIERMANNS
       </div>
 
-      <nav class="flex flex-col items-center justify-center gap-4 sm:gap-8 md:gap-10">
-        <ul class="flex flex-col gap-4 sm:gap-7 md:gap-12 text-base sm:text-lg md:text-2xl font-medium tracking-wider items-center">
+      <nav class="flex flex-col items-center justify-center gap-5 sm:gap-10 md:gap-12">
+        <ul class="flex flex-col gap-8 sm:gap-8 md:gap-18 text-xl sm:text-xl md:text-3xl font-medium tracking-wider items-center">
           <li v-for="item in nav" :key="item.link">
             <a
               :href="withBase(item.link)"
-              class="px-10 py-1 md:px-45 md:py-3 border-2 md:border-3 border-white hover:bg-white hover:text-black transition"
+              class="px-20 py-2 md:px-72 md:py-4 border-2 md:border-3 border-white hover:bg-white hover:text-black transition"
             >
               {{ item.text }}
             </a>

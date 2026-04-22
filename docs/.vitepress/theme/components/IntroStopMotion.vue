@@ -4,7 +4,7 @@
       v-if="frames.length"
       :src="currentSrc"
       :alt="altText"
-      class="absolute inset-0 w-full h-full object-contain md:object-cover select-none"
+      class="absolute inset-0 w-full h-full object-contain md:object-cover scale-130 md:scale-100 translate-x-4 md:translate-x-7 select-none"
       :class="{ 'pulse-vibrant': showPulse }"
       draggable="false"
     />

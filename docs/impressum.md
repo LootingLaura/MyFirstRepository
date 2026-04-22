@@ -1,6 +1,9 @@
 **contact**
 
 Laura Eiermanns <br>
+Hochschule für Künste Bremen <br>
+Am Speicher XI 8 <br>
+28217 Bremen<br>
 l.eiermanns<span>@</span>gmx.de
 
 <br>

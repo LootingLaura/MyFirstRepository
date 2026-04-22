@@ -56,12 +56,12 @@ onBeforeUnmount(() => {
         class="mx-auto w-full flex items-center justify-end px-2 py-0 sm:px-4 md:px-6 lg:px-8"
       >
         <ul
-          class="flex w-full justify-end items-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-3 md:px-4 py-0 text-xs sm:text-sm md:text-base font-medium tracking-wider"
+          class="flex w-full justify-end items-center gap-3 sm:gap-6 md:gap-7 px-2 sm:px-3 md:px-4 py-0 text-lg sm:text-lg md:text-xl font-medium tracking-wider"
         >
           <li v-for="item in nav" :key="item.link" class="shrink-0">
             <a
               :href="withBase(item.link)"
-              class="px-2 sm:px-3 py-1 whitespace-nowrap transition hover:bg-black"
+              class="px-5 py-2.5 sm:px-5 sm:py-2 md:px-6 md:py-2 whitespace-nowrap transition hover:bg-black"
             >
               {{ item.text }}
             </a>
