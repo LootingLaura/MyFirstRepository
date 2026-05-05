@@ -48,7 +48,7 @@ const handleCursorClick = () => {
 
 onMounted(() => {
   window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('click', handleCursorClick)
+  window.addEventListener('pointerup', handleCursorClick)
 })
 
 const isActive = computed(() => isInHoverZone.value && props.isVisible)
@@ -60,7 +60,7 @@ watch(isActive, (val) => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('click', handleCursorClick)
+  window.removeEventListener('pointerup', handleCursorClick)
   document.body.classList.remove('hide-system-cursor')
 })
 </script>
