@@ -9,8 +9,8 @@
         :alt="altText"
         @click="handleClick"
         :class="[
-          'cursor-pointer select-none object-contain pointer-events-auto transition-[filter] duration-500 ease-out',
-          (isFirstFrame || isLastFrame) && !isPlaying ? 'hover:brightness-120' : '',
+          'cursor-pointer select-none object-contain pointer-events-auto transition-[filter] duration-500 ease-out md:w-48! lg:w-48!',
+          (isFirstFrame || isLastFrame) && !isPlaying ? 'hover:brightness-125' : '',
         ]"
         :style="{ width: width, maxHeight: 'calc(100vh - 88px)' }"
       />

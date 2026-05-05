@@ -53,15 +53,15 @@ onBeforeUnmount(() => {
       class="fixed top left-0 right-0 z-40 h-25 flex items-center bg-white/10 backdrop-blur-md"
     >
       <nav
-        class="mx-auto w-full flex items-center justify-end px-2 py-0 sm:px-4 md:px-6 lg:px-8"
+        class="mx-auto w-full flex items-center justify-end pl-[42vw] pr-2 py-0 sm:pl-84 sm:pr-4 md:pr-6 lg:pr-8"
       >
         <ul
-          class="flex w-full justify-end items-center gap-3 sm:gap-6 md:gap-7 px-2 sm:px-3 md:px-4 py-0 text-lg sm:text-lg md:text-xl font-medium tracking-wider"
+          class="flex justify-end items-center gap-1.5 sm:gap-6 md:gap-7 py-0 text-sm sm:text-lg md:text-xl font-medium tracking-wider"
         >
           <li v-for="item in nav" :key="item.link" class="shrink-0">
             <a
               :href="withBase(item.link)"
-              class="px-5 py-2.5 sm:px-5 sm:py-2 md:px-6 md:py-2 whitespace-nowrap transition hover:bg-black"
+              class="px-2 py-1 sm:px-5 sm:py-2 md:px-6 md:py-2 whitespace-nowrap transition hover:bg-black"
             >
               {{ item.text }}
             </a>
