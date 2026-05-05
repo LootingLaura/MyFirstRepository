@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
         class="mx-auto w-full flex items-center justify-center sm:justify-end pl-[41vw] pr-2 py-0 sm:pl-84 sm:pr-4 md:pr-6 lg:pr-8"
       >
         <ul
-          class="flex items-center gap-1.5 sm:gap-6 md:gap-7 py-0 text-base sm:text-lg md:text-xl font-medium tracking-wider"
+          class="flex items-center gap-4 sm:gap-6 md:gap-7 py-0 text-base sm:text-lg md:text-xl font-medium tracking-wider"
         >
           <li v-for="item in nav" :key="item.link" class="shrink-0">
             <a
